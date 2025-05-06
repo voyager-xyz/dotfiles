@@ -84,15 +84,15 @@ export EDITOR='nvim'
 export ARTIFACTORY_PASSWORD="cmVmdGtuOjAxOjE3NzYxNTcxMjE6NzEycW5BTzFjaDI0V1RXRHNJZ3d5blFtWk5X"
 export ARTIFACTORY_USER="jarrod.folino@fundingcircle.com"
 
-alias refresh="python /Users/jarrod.folino/Code/cuiwork/scripts/src/get_lambdas.py > /Users/jarrod.folino/Code/public/data.json"
+# alias refresh="python /Users/jarrod.folino/Code/cuiwork/scripts/src/get_lambdas.py > /Users/jarrod.folino/Code/public/data.json"
 alias lg="lazygit"
 alias m="make"
-alias esb="cd /Users/jarrod.folino/Code/sandbox"
-alias enc="cd /Users/jarrod.folino/.config/nvim"
+alias esb="cd /Users/jarrod.folino/Code/_sandbox"
 alias esz="nvim  ~/.zshrc && . ~/.zshrc"
 alias ee="exit"
-alias ref="python /Users/jarrod.folino/Code/cuiwork/scripts/get_lambdas.py"
 alias ocds='open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security'
+alias me="/Users/jarrod.folino/Code/_cuiwork/me"
+alias g="git status"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
