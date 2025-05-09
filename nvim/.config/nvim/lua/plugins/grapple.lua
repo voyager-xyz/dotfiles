@@ -2,10 +2,10 @@ return {
   {
     "cbochs/grapple.nvim",
     config = function()
-      require("grapple").setup {
+      require("grapple").setup({
         -- Add any specific configuration options here
         scope = "global", -- Example: set the scope to global
-      }
+      })
 
       -- Key mappings for grapple
       local map = vim.api.nvim_set_keymap

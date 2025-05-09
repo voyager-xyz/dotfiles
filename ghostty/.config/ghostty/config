@@ -1,0 +1,6 @@
+font-family = "FiraCode Nerd Font"
+font-size = 14
+theme = catppuccin-mocha
+fullscreen = false
+maximize = true
+title = "Ghossty"

@@ -93,6 +93,8 @@ alias ee="exit"
 alias ocds='open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security'
 alias me="/Users/jarrod.folino/Code/_cuiwork/me"
 alias g="git status"
+alias c="code ."
+alias n="nvim ."
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
