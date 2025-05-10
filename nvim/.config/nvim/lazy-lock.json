@@ -7,7 +7,7 @@
   "astrocore": { "branch": "main", "commit": "5388242729136c5c64d3317e099dfc7b412d9652" },
   "astrolsp": { "branch": "main", "commit": "bb0051597474971b93e1cde2fd960dda978c2378" },
   "astrotheme": { "branch": "main", "commit": "f12dcf64b1f9a05839c3ac2146f550f43bae9dab" },
-  "astroui": { "branch": "main", "commit": "4b1a46eb9576a187246e5fc41cb4670c3daf749e" },
+  "astroui": { "branch": "main", "commit": "fded232ee0001c6bed9b654188e3dd4b0c58317c" },
   "auto-save.nvim": { "branch": "main", "commit": "29f793a3a7f98129387590269ffe3ad61ab5e509" },
   "better-escape.nvim": { "branch": "master", "commit": "199dcc2643dec5d8dbdab4ec672cf405224dcb3b" },
   "blink.cmp": { "branch": "main", "commit": "cb5e346d9e0efa7a3eee7fd4da0b690c48d2a98e" },
@@ -57,7 +57,6 @@
   "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
   "tsc.nvim": { "branch": "main", "commit": "5bd25bb5c399b6dc5c00392ade6ac6198534b53a" },
   "vim-illuminate": { "branch": "master", "commit": "19cb21f513fc2b02f0c66be70107741e837516a1" },
-  "vim-move": { "branch": "master", "commit": "3c4195de0748da9bba25c54d78d959d349e93c55" },
   "which-key.nvim": { "branch": "main", "commit": "fcbf4eea17cb299c02557d576f0d568878e354a4" },
   "wildfire.nvim": { "branch": "master", "commit": "1729faca1c6ae34520a6e531983a3737d3654ee1" }
 }

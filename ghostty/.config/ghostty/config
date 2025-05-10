@@ -1,6 +1,10 @@
 font-family = "FiraCode Nerd Font"
-font-size = 14
-theme = catppuccin-mocha
+font-size = 16
+theme = carbonfox
 fullscreen = false
 maximize = true
-title = "Ghossty"
+custom-shader = ./shaders/smoke-and-ghost.glsl
+shell-integration = zsh
+cursor-style = block_hollow
+mouse-hide-while-typing = true
+working-directory = /Users/jarrod.folino/Code
