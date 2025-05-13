@@ -90,7 +90,7 @@ alias m="make"
 alias esb="cd /Users/jarrod.folino/Code/_sandbox"
 alias esz="nvim  ~/.zshrc && . ~/.zshrc"
 alias ee="exit"
-alias ocds='open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security'
+alias chns='open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security'
 alias me="/Users/jarrod.folino/Code/_cuiwork/me"
 alias g="git status"
 alias c="code ."
