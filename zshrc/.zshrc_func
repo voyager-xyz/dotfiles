@@ -1,3 +1,12 @@
+golf() {
+    vimgolf put 9v00674f1bfb00000000063d
+    vimgolf put 9v006733c56b0000000005d9
+    vimgolf put 9v0066f44ec20000000003ea
+    vimgolf put 9v006694339a0000000002e2
+    vimgolf put 603ba26a01b4d00009c10a49
+    vimgolf put 9v006621a9a900000000026b
+}
+
 ss() {
     # Change to the target directory
     cd /Users/jarrod.folino/Code/ || { echo "Directory not found"; return 1; }

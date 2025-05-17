@@ -11,13 +11,15 @@ export ARTIFACTORY_USER="jarrod.folino@fundingcircle.com"
 alias lg="lazygit"
 alias m="make"
 alias esb="cd /Users/jarrod.folino/Code/_sandbox"
-alias esz="nvim  ~/.zshrc && . ~/.zshrc"
 alias ee="exit"
 alias chns='open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security'
-alias me="/Users/jarrod.folino/Code/_cuiwork/me"
+alias jf="/Users/jarrod.folino/.jf/main.sh"
 alias g="git status"
 alias c="code ."
 alias n="nvim ."
 
 eval "$(pyenv init -)"
 source ~/.zshrc_func
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/jarrod.folino/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
