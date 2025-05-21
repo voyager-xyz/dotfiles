@@ -8,6 +8,10 @@ golf() {
     vimgolf put 4d1a5275a860b74472000110
 }
 
+ff() {
+    aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
+}
+
 ss() {
     # Change to the target directory
     cd /Users/jarrod.folino/Code/ || { echo "Directory not found"; return 1; }

@@ -173,3 +173,8 @@ symbol = " "
 
 [gradle]
 symbol = " "
+
+[character]
+success_symbol = '[ #](bold green)'
+error_symbol = "[ x](bold red)"
+vicmd_symbol = "[ V](bold green)"
