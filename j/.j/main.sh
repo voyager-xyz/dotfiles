@@ -1,6 +1,6 @@
 #/bin/bash
 
-# https://github.com/zdharma-continuum/zinit
+# test coverage
 # list tests
 # go to lambda
 # go to cw logs
@@ -189,7 +189,7 @@ menu () {
 
         "h: handlers"
         "j: Open terminal in project root dir"
-        "k: TBD"
+        "k: "
         "l: TBD"
         ";: TBD"
         
@@ -226,6 +226,9 @@ menu () {
         j)
             cd_proj nvim
             ;;
+        # k)
+        #     ss 
+        #     ;;
         l)
             list_links
             ;;

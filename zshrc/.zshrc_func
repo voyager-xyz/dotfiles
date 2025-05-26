@@ -87,6 +87,17 @@ ch() {
   fi
 
 }
+
+function gitlog() {
+  ## git log -> fzf -> extract commit SHA -> git show
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` \
+      --bind "ctrl-m:execute:
+                echo '{}' | grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R'"
+}
+
 i() {
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -95,6 +106,9 @@ i() {
     . "$HOME/.atuin/bin/env"
     source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
     eval "$(atuin init zsh)"
+    eval "$(zoxide init zsh)"
     eval "$(starship init zsh)"
 }
 
+alias ipycov="poetry add coverage && poetry lock && cp /Users/jarrod.folino/Code/_dotfiles/_scripts/lambda.mk handlers/lambda.mk"
+alias cov="cd build; PYTHONPATH=. coverage run -m poetry run pytest -vv tests && coverage html"

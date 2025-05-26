@@ -1,10 +1,25 @@
-font-family = "FiraCode Nerd Font"
-font-size = 16
-theme = carbonfox
 fullscreen = false
 maximize = true
 custom-shader = ./shaders/smoke-and-ghost.glsl
 shell-integration = zsh
-cursor-style = block_hollow
-mouse-hide-while-typing = true
 working-directory = /Users/jarrod.folino/Code
+
+
+## Window
+window-decoration = true
+mouse-hide-while-typing = true
+window-padding-x = 3
+window-padding-y = 3
+macos-window-shadow = false
+
+## Clipboard
+clipboard-read = "allow"
+clipboard-paste-protection = false
+
+## Theme
+theme = Molokai
+font-family = FiraCode Nerd Font
+font-size = 16
+
+adjust-cell-width = 3%
+adjust-cell-height = 20%

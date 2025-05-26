@@ -132,10 +132,6 @@ alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
 
-# alt-g = 'exec-and-forget open -a /Applications/Ghostty.app'
-# alt-c = 'exec-and-forget open -a /Applications/Google Chrome.app'
-# alt-s = 'exec-and-forget open -a /Applications/Slack.app'
-# alt-v = 'exec-and-forget open -a /Applications/Visual Studio Code.app'
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
 run = "move-node-to-workspace G"
@@ -151,3 +147,10 @@ run = "move-node-to-workspace S"
 [[on-window-detected]]
 if.app-id = 'com.microsoft.VSCode'
 run = "move-node-to-workspace V"
+
+[[on-window-detected]]
+if.app-id = 'com.jgraph.drawio.desktop'
+run = "move-node-to-workspace D"
+
+[[on-window-detected]]
+run = "move-node-to-workspace A"
