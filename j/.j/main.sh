@@ -26,52 +26,6 @@ up () {
     fi
 }
 
-ch () {
-    up
-    handlers_path="./handlers"
-    if [[ ! -d $handlers_path ]]
-    then
-        echo "The 'handlers' directory does not exist."
-        exit 1
-    fi
-    directories=($(find $handlers_path -type f -name "main.py" -exec dirname {} \; | grep -v build | sort | uniq | sed 's/\/src//'))
-    if [[ ${#directories[@]} -eq 0 ]]
-    then
-        echo "No directories with a 'main.py' file found in 'handlers'."
-        exit 1
-    fi
-    selected_directory=$(printf "%s\n" "${directories[@]}" | fzf --prompt="Select a handler")
-    if [[ -n $selected_directory ]]
-    then
-        cd $selected_directory
-    else
-        echo "No directory selected."
-        exit 1
-    fi
-}
-
-cd_proj () {
-    cd "${BASE_DIR}" || {
-        echo "Directory not found"
-        return 1
-    }
-
-    selected_dir=$(find . -maxdepth 1 -type d ! -name '.' | sed 's|^\./||' | sort | fzf --height=40% --border --layout=reverse --prompt="Select a directory: ")
-
-    if [[ -n "$selected_dir" ]]; then
-    
-       test -f "$selected_dir/.venv/bin/activate" && source "$selected_dir/.venv/bin/activate"
-       cd "$selected_dir" || {
-            echo "Failed to change directory"
-            return 1
-       }
-    else
-        echo "No directory selected"
-        return 1
-    fi
-    eval "${1} ."
-}
-
 process_git_repos () {
     for dir in "${1}"/*; do
         if [ -d "$dir/.git" ]; then
@@ -91,41 +45,16 @@ process_git_repos () {
 
 }
 
-get_open_prs () {
-    repos=("${@}")
+# gh api "orgs/FundingCircle/members" --paginate --jq '.[].login'
+# gh api graphql -f query='query { user(login: "AdamM-FC") { contributionsCollection { contributionCalendar { totalContributions } } } }' --jq '.data.user.contributionsCollection.contributionCalendar.totalContributions'
 
-    aggregated_prs=()
-
-    for repo in "${repos[@]}"; do
-        prs=$(gh pr list --repo "FundingCircle/$repo" --state open --json number,title,author,url 2>/dev/null)
-
-        if [[ $? -ne 0 ]]; then
-            echo "Failed to fetch PRs for $repo. Skipping..."
-            continue
-        fi
-
-        # Parse and format PRs
-        formatted_prs=$(echo "$prs" | jq -r --arg repo "$repo" '.[] | "- [" + $repo + "] #" + (.number|tostring) + " " + .title + " by " + .author.login + " (" + .url + ")"')
-        if [[ -n "$formatted_prs" ]]; then
-            aggregated_prs+=("$formatted_prs")
-        fi
-    done
-
-    # Output aggregated PRs
-    if [[ ${#aggregated_prs[@]} -eq 0 ]]; then
-        echo "No open PRs found for any repository."
-    else
-        echo "Aggregated list of open PRs:"
-        printf "%s\n" "${aggregated_prs[@]}"
-    fi
-}
 
 open_handler () {
     cd "${BASE_DIR}/${1}"
     test -f "${BASE_DIR}/${1}/.venv/bin/activate" && source "${BASE_DIR}/${1}/.venv/bin/activate"
     cd "${BASE_DIR}/${1}"
     ch
-    nvim .
+    code .
 }
 
 get_tests () {
@@ -140,7 +69,9 @@ get_tests () {
 }
 
 chistory () {
-    python $SCRIPTS_DIR/chistory.py visit_count domain github.com url
+    DIRS=$(python $SCRIPTS_DIR/chistory.py visit_count domain github.com url)
+    selected_directory=$(python $SCRIPTS_DIR/chistory.py visit_count domain github.com url | fzf --prompt="Select URL")
+    open $selected_directory
 }
 
 list_links() {
@@ -204,18 +135,7 @@ menu () {
     key=$(head -n 1 <<< "$choice")
 
     case "$key" in
-        r)
-            process_git_repos $BASE_DIR
-            ;;
-        # a)
-        #     open_handler flexipay-rewards-api
-        #     ;;
-        # s)
-        #     open_handler stc-transactions-api
-        #     ;;
-        # d)
-        #     open_handler flexipay-pricing-api
-        #     ;;
+
         f)
             chistory
             ;;
@@ -231,13 +151,6 @@ menu () {
         #     ;;
         l)
             list_links
-            ;;
-        k)
-            get_open_prs flexipay-rewards-and-pricing-shared flexipay-rewards-api \
-                         flexipay-pricing-api \
-                         stc-transactions-api \
-                         uk-borrower-platform-transactions \
-                         python-lambda-utils
             ;;
         q)
             echo "Goodbye!"

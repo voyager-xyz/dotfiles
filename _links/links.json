@@ -1,16 +1,19 @@
 [
   {
+    "name": "OKTA",
+    "url": "https://fundingcircle.okta.com/app/UserHome?session_hint=AUTHENTICATED"
+  },
+  {
+    "name": "Codat",
+    "url": "https://app.codat.io"
+  },
+  {
     "name": "Test Users",
     "url": "https://fundingcircle.slack.com/archives/C019LRW7K0X"
   },
   {
-    "name": "Ideation",
-    "url": "https://fundingcircle.atlassian.net/wiki/spaces/RP/pages/120094721/Revolve+rewards+migration"
-  },
-  
-  {
-    "name": "Codat",
-    "url": "https://app.codat.io/?invitationId=3c4fb345-cf3e-434b-22b0-08dd7af058b3"
+    "name": "SSH Secrets",
+    "url": "https://docs.google.com/document/d/1_eM5GXyY5lxdsno0yqRuaxpz_2H2mAZT0GM0zrCJ4pc/edit?tab=t.0"
   },
   {
     "name": "AG Docs",
@@ -19,10 +22,6 @@
   {
     "name": "Codat source accounts",
     "url": "https://fundingcircle.slack.com/archives/C019LRW7K0X"
-  },
-  {
-    "name": "OKTA",
-    "url": "https://fundingcircle.okta.com/app/UserHome?session_hint=AUTHENTICATED"
   },
   {
     "name": "Jira Board",
@@ -49,23 +48,7 @@
     "url": "https://calendar.google.com/calendar/u/0/r"
   },
   {
-    "name": "Rewards HB",
-    "url": "https://app.honeybadger.io/projects/126121"
-  },
-  {
     "name": "SSH Tech",
     "url": "https://confluence.fundingcircle.com/display/RP/Tech"
-  },
-  {
-    "name": "Chat GPT",
-    "url": "https://www.timeanddate.com/countdown/generic?iso=20251125T00&p0=136&font=cursive"
-  },
-  {
-    "name": "Mermaid Charts",
-    "url": "https://mermaid.live/edit"
-  },
-  {
-    "name": "Rewards Infra",
-    "url": "https://github.com/FundingCircle/flexipay-rewards-api/blob/main/main_diagram.jpg"
   }
 ]

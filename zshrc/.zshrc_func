@@ -1,44 +1,46 @@
-golf() {
-    vimgolf put 9v00674f1bfb00000000063d
-    vimgolf put 9v006733c56b0000000005d9
-    vimgolf put 9v0066f44ec20000000003ea
-    vimgolf put 9v006694339a0000000002e2
-    vimgolf put 603ba26a01b4d00009c10a49
-    vimgolf put 9v006621a9a900000000026b
-    vimgolf put 4d1a5275a860b74472000110
+LINKS_FILE="/Users/jarrod.folino/Code/_dotfiles/_links/links.json"
+BASE_DIR="/Users/jarrod.folino/Code"
+
+SCRIPTS_DIR="${BASE_DIR}/_dotfiles/_scripts"
+
+jh () {
+  echo "jh -> Show this help"
+  echo "jg -> Open github project in browser"
+  echo "jl -> Open Link"
+  echo "jj -> change project"
+  echo "up -> go to root dir og git project"
+  echo "ji -> enhance shell"
+  echo "jp -> list pull requests"
+  echo "jw -> jw list chrome history"
 }
 
-ff() {
-    aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
+jg () {
+    up
+    open $(cat .git/config | grep url | cut -d "=" -f 2)
 }
 
-ss() {
-    # Change to the target directory
-    cd /Users/jarrod.folino/Code/ || { echo "Directory not found"; return 1; }
 
-    # List all directories in the current folder
-    echo "Directories in /Users/jarrod.folino/Code/"
-    dirs=()
-    i=1
-    for dir in $(find . -maxdepth 1 -type d ! -name '.' | sort); do
-        dir_name=$(basename "$dir")
-        dirs+=("$dir_name")
-        echo "$i) $dir_name"
-        ((i++))
-    done
-
-    # Prompt the user to select a directory
-    echo -n "Enter the number of the directory to change to: "
-    read choice
-
-    # Validate the input and change to the selected directory
-    if [[ "$choice" -ge 1 && "$choice" -le "${#dirs[@]}" ]]; then
-        selected_dir="${dirs[$((choice))]}"
-        cd "/Users/jarrod.folino/Code/$selected_dir" || { echo "Failed to change directory"; return 1; }
-        echo "Changed to directory: $selected_dir"
-    else
-        echo "Invalid choice"
+jl() {
+    if [[ ! -f "$LINKS_FILE" ]]; then
+        echo "links.json file not found at $LINKS_FILE"
         return 1
+    fi
+
+    jq -r '.[] | "\(.name)\t\(.url)"' "$LINKS_FILE" | while IFS=$'\t' read -r name url; do
+        echo $'\033]8;;'"$url"$'\033\\'"$name"$'\033]8;;\033\\'
+    done
+}
+
+
+jj() {
+    cd $BASE_DIR|| { echo "Directory not found"; return 1; }
+    selected_directory=$(ls $BASE_DIR | fzf --prompt="Select a directory: ")
+
+    if [[ -n $selected_directory ]]; then
+        cd $selected_directory
+    else
+        echo "No directory selected."
+        exit 1
     fi
 }
 
@@ -52,53 +54,7 @@ up() {
   fi
 }
 
-ch() {
-  up
-  handlers_path="./handlers"
-  
-  # Check if the handlers directory exists
-  if [[ ! -d $handlers_path ]]; then
-    echo "The 'handlers' directory does not exist."
-    exit 1
-  fi
-  
-  # Find all directories containing a main.py file
-  directories=($(find $handlers_path -type f -name "main.py" -exec dirname {} \; | sort | uniq))
-  
-  # Check if there are any directories with main.py
-  if [[ ${#directories[@]} -eq 0 ]]; then
-    echo "No directories with a 'main.py' file found in 'handlers'."
-    exit 1
-  fi
-  
-  # Use fzf to let the user select a directory
-  selected_directory=$(printf "%s\n" "${directories[@]}" | fzf --prompt="Select a directory: ")
-  
-  # Check if a directory was selected
-  if [[ -n $selected_directory ]]; then
-    cd $selected_directory
-    cd ..
-    echo
-    echo "To cd into the directory, run:"
-    echo "cd $selected_directory"
-  else
-    echo "No directory selected."
-    exit 1
-  fi
-
-}
-
-function gitlog() {
-  ## git log -> fzf -> extract commit SHA -> git show
-  git log --graph --color=always \
-      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-  fzf --ansi --no-sort --reverse --tiebreak=index --toggle-sort=\` \
-      --bind "ctrl-m:execute:
-                echo '{}' | grep -o '[a-f0-9]\{7\}' | head -1 |
-                xargs -I % sh -c 'git show --color=always % | less -R'"
-}
-
-i() {
+ji() {
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -110,5 +66,42 @@ i() {
     eval "$(starship init zsh)"
 }
 
-alias ipycov="poetry add coverage && poetry lock && cp /Users/jarrod.folino/Code/_dotfiles/_scripts/lambda.mk handlers/lambda.mk"
-alias cov="cd build; PYTHONPATH=. coverage run -m poetry run pytest -vv tests && coverage html"
+get_open_prs () {
+    repos=("${@}")
+
+    aggregated_prs=()
+
+    for repo in "${repos[@]}"; do
+        prs=$(gh pr list --repo "FundingCircle/$repo" --state open --json number,title,author,url 2>/dev/null)
+
+        if [[ $? -ne 0 ]]; then
+            echo "Failed to fetch PRs for $repo. Skipping..."
+            continue
+        fi
+
+        formatted_prs=$(echo "$prs" | jq -r --arg repo "$repo" '.[] | "- [" + $repo + "] #" + (.number|tostring) + " " + .title + " by " + .author.login + " (" + .url + ")"')
+        if [[ -n "$formatted_prs" ]]; then
+            aggregated_prs+=("$formatted_prs")
+        fi
+    done
+
+    if [[ ${#aggregated_prs[@]} -eq 0 ]]; then
+        echo "No open PRs found for any repository."
+    else
+        echo "Aggregated list of open PRs:"
+        printf "%s\n" "${aggregated_prs[@]}"
+    fi
+}
+
+jp () {
+  get_open_prs flexipay-rewards-and-pricing-shared flexipay-rewards-api \
+                         flexipay-pricing-api \
+                         stc-transactions-api \
+                         uk-borrower-platform-transactions \
+                         python-lambda-utils
+}
+
+jw () {
+    selected_directory=$(python $SCRIPTS_DIR/chistory.py visit_count domain github.com url | fzf --prompt="Select URL: ")
+    open $selected_directory
+}

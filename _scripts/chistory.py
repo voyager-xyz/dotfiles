@@ -62,10 +62,6 @@ def main(sort_key, filter_by, attrs):
     os.remove(tmp_history)
 if __name__ == "__main__":
 
-    # sort_key = "visit_count"
-    # filter_by = {"key": "domain", "value": "github.com"}
-    # attrs = ["url", "visit_count"]
-
     sort_key = sys.argv[1]
     filter_by = {
         "key": sys.argv[2],
