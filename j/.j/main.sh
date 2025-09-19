@@ -9,9 +9,9 @@
 # reset chrome
 
 BASE_DIR="/Users/jarrod.folino/Code"
-SCRIPTS_DIR="${BASE_DIR}/_dotfiles/_scripts"
-OUTPUT_DIR="/Users/jarrod.folino/Code/_dotfiles/_output"
-LINKS_FILE="/Users/jarrod.folino/Code/_dotfiles/_links/links.json"
+SCRIPTS_DIR="${BASE_DIR}/dotfiles/_scripts"
+OUTPUT_DIR="/Users/jarrod.folino/Code/dotfiles/_output"
+LINKS_FILE="/Users/jarrod.folino/Code/dotfiles/_links/links.json"
 
 
 
