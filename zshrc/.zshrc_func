@@ -1,7 +1,7 @@
-LINKS_FILE="/Users/jarrod.folino/Code/_dotfiles/_links/links.json"
-BASE_DIR="/Users/jarrod.folino/Code"
+LINKS_FILE="/Users/jarrodfolino/Code/dotfiles/_links/links.json"
+BASE_DIR="/Users/jarrodfolino/Code"
 
-SCRIPTS_DIR="${BASE_DIR}/_dotfiles/_scripts"
+SCRIPTS_DIR="${BASE_DIR}/dotfiles/_scripts"
 
 jh () {
   echo "jh -> Show this help"
@@ -93,13 +93,6 @@ get_open_prs () {
     fi
 }
 
-jp () {
-  get_open_prs flexipay-rewards-and-pricing-shared flexipay-rewards-api \
-                         flexipay-pricing-api \
-                         stc-transactions-api \
-                         uk-borrower-platform-transactions \
-                         python-lambda-utils
-}
 
 jw () {
     selected_directory=$(python $SCRIPTS_DIR/chistory.py visit_count domain github.com url | fzf --prompt="Select URL: ")

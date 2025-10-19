@@ -8,10 +8,10 @@
 # open links
 # reset chrome
 
-BASE_DIR="/Users/jarrod.folino/Code"
+BASE_DIR="/Users/jarrodfolino/Code"
 SCRIPTS_DIR="${BASE_DIR}/dotfiles/_scripts"
-OUTPUT_DIR="/Users/jarrod.folino/Code/dotfiles/_output"
-LINKS_FILE="/Users/jarrod.folino/Code/dotfiles/_links/links.json"
+OUTPUT_DIR="${BASE_DIR}/dotfiles/_output"
+LINKS_FILE="${BASE_DIR}/dotfiles/_links/links.json"
 
 
 
@@ -49,13 +49,6 @@ process_git_repos () {
 # gh api graphql -f query='query { user(login: "AdamM-FC") { contributionsCollection { contributionCalendar { totalContributions } } } }' --jq '.data.user.contributionsCollection.contributionCalendar.totalContributions'
 
 
-open_handler () {
-    cd "${BASE_DIR}/${1}"
-    test -f "${BASE_DIR}/${1}/.venv/bin/activate" && source "${BASE_DIR}/${1}/.venv/bin/activate"
-    cd "${BASE_DIR}/${1}"
-    ch
-    code .
-}
 
 get_tests () {
     cd "${1}"
@@ -83,82 +76,6 @@ list_links() {
     jq -r '.[] | "\(.name)\t\(.url)"' "$LINKS_FILE" | while IFS=$'\t' read -r name url; do
         echo $'\033]8;;'"$url"$'\033\\'"$name"$'\033]8;;\033\\'
     done
-}
-
-select_handler () {
-    options=(
-        "a: rewards"
-        "s: transactions"
-        "d: pricing"
-        "q: Quit"
-    )
-    formatted_options=$(printf "%s\n" "${options[@]}" | column -t -s ':')
-    choice=$(echo "$formatted_options" | fzf --height=40% --border --layout=reverse --prompt="Select an option: " --expect=a,s,d,q --bind "j:down,k:up")
-    key=$(head -n 1 <<< "$choice")
-case "$key" in
-        a)
-            open_handler flexipay-rewards-api
-            ;;
-        s)
-            open_handler stc-transactions-api
-            ;;
-        d)
-            open_handler flexipay-pricing-api
-            ;;
-        q)
-            ;;
-        *)
-            echo "Invalid choice"
-            ;;
-    esac
-
-}
-
-menu () {
-    options=(
-        "f: CHistory"
-
-        "h: handlers"
-        "j: Open terminal in project root dir"
-        "k: "
-        "l: TBD"
-        ";: TBD"
-        
-        "r: Refresh all Git repositories"
-        "k: Fetch open PRs for repositories"
-        "l: Links"
-        "q: Quit"
-    )
-
-    formatted_options=$(printf "%s\n" "${options[@]}" | column -t -s ':')
-    choice=$(echo "$formatted_options" | fzf --height=40% --border --layout=reverse --prompt="Select an option: " --expect=f,h,j,r,k,q,l --bind "j:down,k:up")
-    key=$(head -n 1 <<< "$choice")
-
-    case "$key" in
-
-        f)
-            chistory
-            ;;
-        h)
-           select_handler 
-            ;;
-
-        j)
-            cd_proj nvim
-            ;;
-        # k)
-        #     ss 
-        #     ;;
-        l)
-            list_links
-            ;;
-        q)
-            echo "Goodbye!"
-            ;;
-        *)
-            echo "Invalid choice"
-            ;;
-    esac
 }
 
 clear
