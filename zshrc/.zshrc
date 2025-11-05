@@ -7,10 +7,9 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='nvim'
 
-alias lg="lazygit"
+alias gg="lazygit"
 alias ee="exit"
 alias chns='open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security'
-alias j="/Users/jarrodfolino/.j/main.sh"
 alias g="git status"
 alias c="code ."
 alias n="nvim ."
