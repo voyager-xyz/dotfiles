@@ -1,34 +1,31 @@
-LINKS_FILE="/Users/jarrod.folino/Code/_dotfiles/_links/links.json"
-BASE_DIR="/Users/jarrod.folino/Code"
+BASE_DIR="/Users/jarrodfolino/Code"
+HOME_DIR="/Users/jarrodfolino"
 
-SCRIPTS_DIR="${BASE_DIR}/_dotfiles/_scripts"
+SCRIPTS_DIR="${BASE_DIR}/dotfiles/_scripts"
 
 jh () {
   echo "jh -> Show this help"
   echo "jg -> Open github project in browser"
-  echo "jl -> Open Link"
+  echo "jl -> Open Brave Bookmarks"
   echo "jj -> change project"
-  echo "up -> go to root dir og git project"
+  echo "up -> go to root dir of git project"
   echo "ji -> enhance shell"
-  echo "jp -> list pull requests"
-  echo "jw -> jw list chrome history"
 }
 
 jg () {
     up
-    open $(cat .git/config | grep url | cut -d "=" -f 2)
+    LINK=$(cat .git/config | grep url | cut -d "=" -f 2 | sed "s/ //")
+    if [[ "$LINK" == git@* ]]; then
+      open $(echo $LINK | sed "s/:/\//" | sed "s/git@/https:\/\//" | sed "s/.git$//")
+    else
+      open $LINK
+    fi
 }
 
 
 jl() {
-    if [[ ! -f "$LINKS_FILE" ]]; then
-        echo "links.json file not found at $LINKS_FILE"
-        return 1
-    fi
-
-    jq -r '.[] | "\(.name)\t\(.url)"' "$LINKS_FILE" | while IFS=$'\t' read -r name url; do
-        echo $'\033]8;;'"$url"$'\033\\'"$name"$'\033]8;;\033\\'
-    done
+    selected_directory=$(jq -r '.. | .url? // empty' "$HOME_DIR/Library/Application Support/BraveSoftware/Brave-Browser/Default/Bookmarks" | sort | fzf --prompt="Select a url")
+    open $selected_directory
 }
 
 
@@ -60,48 +57,8 @@ ji() {
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
     . "$HOME/.atuin/bin/env"
-    source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
     eval "$(atuin init zsh)"
     eval "$(zoxide init zsh)"
     eval "$(starship init zsh)"
 }
 
-get_open_prs () {
-    repos=("${@}")
-
-    aggregated_prs=()
-
-    for repo in "${repos[@]}"; do
-        prs=$(gh pr list --repo "FundingCircle/$repo" --state open --json number,title,author,url 2>/dev/null)
-
-        if [[ $? -ne 0 ]]; then
-            echo "Failed to fetch PRs for $repo. Skipping..."
-            continue
-        fi
-
-        formatted_prs=$(echo "$prs" | jq -r --arg repo "$repo" '.[] | "- [" + $repo + "] #" + (.number|tostring) + " " + .title + " by " + .author.login + " (" + .url + ")"')
-        if [[ -n "$formatted_prs" ]]; then
-            aggregated_prs+=("$formatted_prs")
-        fi
-    done
-
-    if [[ ${#aggregated_prs[@]} -eq 0 ]]; then
-        echo "No open PRs found for any repository."
-    else
-        echo "Aggregated list of open PRs:"
-        printf "%s\n" "${aggregated_prs[@]}"
-    fi
-}
-
-jp () {
-  get_open_prs flexipay-rewards-and-pricing-shared flexipay-rewards-api \
-                         flexipay-pricing-api \
-                         stc-transactions-api \
-                         uk-borrower-platform-transactions \
-                         python-lambda-utils
-}
-
-jw () {
-    selected_directory=$(python $SCRIPTS_DIR/chistory.py visit_count domain github.com url | fzf --prompt="Select URL: ")
-    open $selected_directory
-}

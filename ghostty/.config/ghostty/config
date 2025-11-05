@@ -2,7 +2,6 @@ fullscreen = false
 maximize = true
 custom-shader = ./shaders/smoke-and-ghost.glsl
 shell-integration = zsh
-working-directory = /Users/jarrod.folino/Code
 
 
 ## Window
