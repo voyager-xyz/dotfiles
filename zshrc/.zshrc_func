@@ -22,6 +22,15 @@ jg () {
     fi
 }
 
+jga () {
+    up
+    LINK=$(cat .git/config | grep url | cut -d "=" -f 2 | sed "s/ //")
+    if [[ "$LINK" == git@* ]]; then
+      open $(echo $LINK | sed "s/:/\//" | sed "s/git@/https:\/\//" | sed "s/.git$//" | xargs -I {} echo {}/actions)
+    else
+      open $(echo $LINK | sed "s/.git$//" | xargs -I {} echo {}/actions)
+    fi
+}
 
 jl() {
     selected_directory=$(jq -r '.. | .url? // empty' "$HOME_DIR/Library/Application Support/BraveSoftware/Brave-Browser/Default/Bookmarks" | sort | fzf --prompt="Select a url")
@@ -34,7 +43,7 @@ jj() {
     selected_directory=$(ls $BASE_DIR | fzf --prompt="Select a directory: ")
 
     if [[ -n $selected_directory ]]; then
-        cd $selected_directory
+        z $selected_directory
     else
         echo "No directory selected."
         exit 1
