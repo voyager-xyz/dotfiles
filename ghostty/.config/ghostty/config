@@ -1,6 +1,5 @@
 fullscreen = false
 maximize = true
-custom-shader = ./shaders/smoke-and-ghost.glsl
 shell-integration = zsh
 
 

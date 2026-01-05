@@ -26,7 +26,8 @@ export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 source <(carapace _carapace)
 # ruby
-export RUBYOPT="-r$HOME/.rubyopenssl_default_store.rb $RUBYOPT"
+# export RUBYOPT="-r$HOME/.rubyopenssl_default_store.rb $RUBYOPT"
+eval "$(rbenv init - --no-rehash zsh)"
 
 # javascript
 export NVM_DIR="$HOME/.nvm"
