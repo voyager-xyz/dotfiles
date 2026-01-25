@@ -6,7 +6,7 @@ brew install --cask font-jetbrains-mono-nerd-font font-caskaydia-cove-nerd-font 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 brew install --cask $(brew search font-.*-nerd-font | awk '{ print $1 }')\n
-apps=(gh openssl@3 starship bat lazygit stow tmux carapace pyenv fontconfig libpng rbenv fzf neovim ripgrep zoxide)
+apps=(gh openssl@3 starship bat lazygit yazi stow tmux carapace pyenv fontconfig libpng rbenv fzf neovim ripgrep zoxide)
 for app in "${apps[@]}"; do
     echo "Installing $app."
 done

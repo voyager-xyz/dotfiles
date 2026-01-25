@@ -21,8 +21,10 @@ alias ptv="poetry run pytest -vv"
 
 # other
 alias ee="exit"
+alias ev="cd ~/.config/nvim"
 alias chns='open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security'
 alias n="nvim ."
+alias y="yazi"
 
 #############
 eval "$(pyenv init -)"

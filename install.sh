@@ -5,6 +5,7 @@ stow -d $BASE_DIR -R -t ~ starship
 stow -d $BASE_DIR -R -t ~ ghostty
 stow -d $BASE_DIR -R -t ~ atuin
 stow -d $BASE_DIR -R -t ~ zoxide
+stow -d $BASE_DIR -R -t ~ yazi
 
 . ~/.zshrc
 . ~/.zshrc_func
