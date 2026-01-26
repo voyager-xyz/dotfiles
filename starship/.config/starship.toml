@@ -45,6 +45,7 @@ tag_symbol = '  '
 
 [golang]
 symbol = " "
+format = "via [$symbol($version )]($style)"
 
 [guix_shell]
 symbol = " "
