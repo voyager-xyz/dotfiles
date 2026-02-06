@@ -1,10 +1,11 @@
 alias dsu="devbox services up"
 
-source /Users/jarrod.folino/.config/hotel/config.zsh
+source "${HOME}/.config/hotel/config.zsh"
+
 # granted 
 . "$HOME/.cargo/env"
-fpath=(/Users/jarrod.folino/.granted/zsh_autocomplete/assume/ $fpath)
-fpath=(/Users/jarrod.folino/.granted/zsh_autocomplete/granted/ $fpath)
+fpath=("${HOME}.granted/zsh_autocomplete/assume/" $fpath)
+fpath=("${HOME}/.granted/zsh_autocomplete/granted/" $fpath)
 alias assume=". assume"
 export PATH="$HOME/.local/bin:$PATH"
 alias g="gradle"

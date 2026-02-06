@@ -27,6 +27,7 @@ alias n="nvim ."
 alias y="yazi"
 
 #############
+eval "$(zoxide init zsh)"
 source ~/.zshrc_func
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'

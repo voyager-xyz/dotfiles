@@ -1,4 +1,4 @@
-BASE_DIR="/Users/jarrodfolino/Code/dotfiles"
-HOME_DIR="/Users/jarrodfolino"
+BASE_DIR="${HOME}/Code/dotfiles"
 
-cp -R "${BASE_DIR}/astrovim/" "${HOME_DIR}/.config/nvim/lua/plugins/"
+
+cp -R "${BASE_DIR}/astrovim/" "${HOME}/.config/nvim/lua/plugins/"

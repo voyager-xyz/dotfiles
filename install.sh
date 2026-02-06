@@ -1,5 +1,5 @@
 #!/bin/zsh
-BASE_DIR="/Users/jarrod.folino/Code/dotfiles"
+BASE_DIR="${HOME}/Code/dotfiles"
 stow -d $BASE_DIR -R -t ~ zshrc --adopt
 stow -d $BASE_DIR -R -t ~ starship --adopt
 stow -d $BASE_DIR -R -t ~ ghostty --adopt
