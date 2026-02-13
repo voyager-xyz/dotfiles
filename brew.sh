@@ -7,6 +7,8 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 brew install --cask $(brew search font-.*-nerd-font | awk '{ print $1 }')\n
 brew install --cask cardinal-search
+brew tap debugtheworldbot/keystats
+brew install keystats
 apps=(kotlin stow pyenv go zoxide rbenv fzf carapace xz neovim gh openssl@3 starship bat lazygit yazi stow tmux carapace pyenv fontconfig libpng rbenv fzf neovim ripgrep zoxide)
 for app in "${apps[@]}"; do
     echo "Installing $app."
