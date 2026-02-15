@@ -7,6 +7,7 @@ stow -d $BASE_DIR -R -t ~ atuin --adopt
 stow -d $BASE_DIR -R -t ~ zoxide --adopt
 stow -d $BASE_DIR -R -t ~ yazi --adopt
 stow -d $BASE_DIR -R -t ~ tmuxinator
+stow -d $BASE_DIR -R -t ~ tmux
 
 . ~/.zshrc
 . ~/.zshrc_func
