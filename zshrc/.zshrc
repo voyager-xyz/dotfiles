@@ -27,6 +27,7 @@ alias n="nvim ."
 alias y="yazi"
 
 #############
+export PATH="$HOME/.tmuxifier/bin:$PATH"
 eval "$(zoxide init zsh)"
 source ~/.zshrc_func
 export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
