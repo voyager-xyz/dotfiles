@@ -43,7 +43,7 @@ jj() {
     selected_directory=$(ls | sort | fzf)
 
     if [[ -n $selected_directory ]]; then
-        z $selected_directory
+        tmuxinator start $selected_directory
     else
         echo "No directory selected."
         return 1
@@ -65,6 +65,7 @@ ji() {
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+    eval "$(zoxide init zsh)"
     . "$HOME/.atuin/bin/env"
     eval "$(atuin init zsh)"
     eval "$(starship init zsh)"

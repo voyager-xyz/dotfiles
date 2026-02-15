@@ -10,7 +10,7 @@ brew install --cask cardinal-search
 brew tap debugtheworldbot/keystats
 brew install keystats
 git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
-apps=(kotlin stow pyenv go zoxide rbenv fzf carapace xz neovim gh openssl@3 starship bat lazygit yazi stow tmux carapace pyenv fontconfig libpng rbenv fzf neovim ripgrep zoxide)
+apps=(tmuxinator stow pyenv go zoxide rbenv fzf carapace xz neovim gh openssl@3 starship bat lazygit yazi stow tmux carapace pyenv fontconfig libpng rbenv fzf neovim ripgrep zoxide)
 for app in "${apps[@]}"; do
     echo "Installing $app."
 done

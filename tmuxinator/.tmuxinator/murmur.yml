@@ -1,0 +1,11 @@
+name: murmur
+root: ~/Code/murmur
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - ji && nvim
+  - console:
+      panes:
+        - ji 

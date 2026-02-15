@@ -1,0 +1,11 @@
+name: users-service
+root: ~/Code/users-service
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - ji && nvim
+  - console:
+      panes:
+        - ji 
