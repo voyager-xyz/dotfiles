@@ -7,7 +7,7 @@ jh () {
   echo "jg -> Open github project in browser"
   echo "jg -> Open github actions in browser"
   echo "jl -> Open Brave Bookmarks"
-  echo "jj -> change project"
+  echo "tt -> change project"
   echo "up -> go to root dir of git project"
   echo "ji -> enhance shell"
 }
@@ -36,9 +36,12 @@ jl() {
     selected_directory=$(jq -r '.. | .url? // empty' "$HOME/Library/Application Support/BraveSoftware/Brave-Browser/Default/Bookmarks" | sort | fzf --prompt="Select a url")
     open $selected_directory
 }
-
-
-jj() {
+ttu() {
+    export DEVBOX_SERVICES_UP=true
+    tt
+    unset DEVBOX_SERVICES_UP
+}
+tt() {
     cd $BASE_DIR|| { echo "Directory not found"; return 1; }
     selected_directory=$(ls | sort | fzf)
 
