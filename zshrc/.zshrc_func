@@ -37,9 +37,15 @@ jl() {
     open $selected_directory
 }
 ttu() {
-    export DEVBOX_SERVICES_UP=true
-    tt
-    unset DEVBOX_SERVICES_UP
+    cd $BASE_DIR|| { echo "Directory not found"; return 1; }
+    selected_directory=$(ls | sort | fzf)
+
+    if [[ -n $selected_directory ]]; then
+        DEVBOX_SERVICES_UP=true tmuxinator start $selected_directory
+    else
+        echo "No directory selected."
+        return 1
+    fi
 }
 tt() {
     cd $BASE_DIR|| { echo "Directory not found"; return 1; }
