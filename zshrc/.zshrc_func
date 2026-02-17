@@ -37,22 +37,20 @@ jl() {
     open $selected_directory
 }
 ttu() {
-    cd $BASE_DIR|| { echo "Directory not found"; return 1; }
-    selected_directory=$(ls | sort | fzf)
+    selected_directory=$(ls $BASE_DIR | sort | fzf)
 
     if [[ -n $selected_directory ]]; then
-        DEVBOX_SERVICES_UP=true tmuxinator start $selected_directory
+        (cd "$BASE_DIR/$selected_directory" && DEVBOX_SERVICES_UP=true tmuxinator start $selected_directory)
     else
         echo "No directory selected."
         return 1
     fi
 }
 tt() {
-    cd $BASE_DIR|| { echo "Directory not found"; return 1; }
-    selected_directory=$(ls | sort | fzf)
+    selected_directory=$(ls $BASE_DIR | sort | fzf)
 
     if [[ -n $selected_directory ]]; then
-        tmuxinator start $selected_directory
+        (cd "$BASE_DIR/$selected_directory" && tmuxinator start $selected_directory)
     else
         echo "No directory selected."
         return 1
