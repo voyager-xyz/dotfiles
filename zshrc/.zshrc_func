@@ -5,8 +5,9 @@ SCRIPTS_DIR="${BASE_DIR}/dotfiles/_scripts"
 jh () {
   echo "jh -> Show this help"
   echo "jg -> Open github project in browser"
-  echo "jg -> Open github actions in browser"
+  echo "jga -> Open github actions in browser"
   echo "jl -> Open Brave Bookmarks"
+  echo "jprs -> List open PRs for repos and users"
   echo "tt -> change project"
   echo "up -> go to root dir of git project"
   echo "ji -> enhance shell"
@@ -80,3 +81,47 @@ ji() {
     eval "$(rbenv init - --no-rehash zsh)"
 }
 
+js() {
+    OUTPUT_DIR="$HOME/Code/notes/quick_notes"
+    TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
+    FILENAME="${TIMESTAMP}_UTC.txt"
+    mkdir -p "$OUTPUT_DIR"
+    if [ -z "$(pbpaste)" ]; then
+      echo "Clipboard is empty!"
+      exit 1
+    fi
+
+    pbpaste > "$OUTPUT_DIR/$FILENAME"
+}
+
+jprs() {
+    # Usage: jprs "repo1 repo2" "user1 user2"
+    # Example: jprs "owner/repo1 owner/repo2" "username1 username2"
+
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "Usage: jprs \"repo1 repo2\" \"user1 user2\""
+        echo "Example: jprs \"owner/repo1 owner/repo2\" \"username1 username2\""
+        return 1
+    fi
+
+    local repos=("${(@s/ /)1}")
+    local users=("${(@s/ /)2}")
+
+    echo "Searching for open PRs..."
+    echo "Repos: ${repos[@]}"
+    echo "Users: ${users[@]}"
+    echo ""
+
+    for repo in $repos; do
+        echo "=== Repository: $repo ==="
+        for user in $users; do
+            local prs=$(gh pr list --repo "$repo" --author "$user" --state open --json number,title,url,createdAt --jq '.[] | "#\(.number) - \(.title)\n  Created: \(.createdAt | sub("T.*"; ""))\n  \(.url)\n"')
+
+            if [ -n "$prs" ]; then
+                echo "  Author: $user"
+                echo "$prs"
+            fi
+        done
+        echo ""
+    done
+}

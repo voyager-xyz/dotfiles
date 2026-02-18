@@ -27,7 +27,7 @@ alias n="nvim ."
 alias y="yazi"
 alias mux="tmuxinator"
 alias tka="tmux kill-server"
-
+alias dclaude="claude --dangerously-skip-permissions"
 #############
 eval "$(zoxide init zsh)"
 source ~/.zshrc_func
