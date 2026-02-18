@@ -21,3 +21,7 @@ font-size = 20
 
 adjust-cell-width = 3%
 adjust-cell-height = 20%
+
+## Terminal Capabilities
+# Enable Option key as Alt for proper modifier key support
+macos-option-as-alt = true
