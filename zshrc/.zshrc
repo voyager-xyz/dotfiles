@@ -37,3 +37,4 @@ source <(carapace _carapace)
 export NVM_DIR="$HOME/.nvm"
 
 [ -f "${HOME}/.cultureamp" ] && source "${HOME}/.cultureamp"
+# tmuxinator start "notes"

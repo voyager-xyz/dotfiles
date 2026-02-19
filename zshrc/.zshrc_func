@@ -48,10 +48,10 @@ ttu() {
     fi
 }
 tt() {
-    selected_directory=$(ls $BASE_DIR | sort | fzf)
+    selected_directory=$(cat ${HOME}/Code/dotfiles/tmuxinator/.tmuxinator/* | grep name | sed 's/name: //' | sort | fzf)
 
     if [[ -n $selected_directory ]]; then
-        (cd "$BASE_DIR/$selected_directory" && tmuxinator start $selected_directory)
+        tmuxinator start $selected_directory
     else
         echo "No directory selected."
         return 1
