@@ -1,7 +1,7 @@
 fullscreen = false
 maximize = true
 shell-integration = zsh
-
+keybind = ctrl+tab=unbind
 
 ## Window
 window-decoration = true
@@ -25,3 +25,5 @@ adjust-cell-height = 20%
 ## Terminal Capabilities
 # Enable Option key as Alt for proper modifier key support
 macos-option-as-alt = true
+
+custom-shader = ~/.config/ghostty/shaders/cursor_warp.glsl
