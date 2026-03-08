@@ -6,8 +6,8 @@ keybind = ctrl+tab=unbind
 ## Window
 window-decoration = true
 mouse-hide-while-typing = true
-window-padding-x = 8
-window-padding-y = 8
+window-padding-x = 30
+window-padding-y = 50
 macos-window-shadow = false
 
 ## Clipboard
@@ -26,4 +26,4 @@ adjust-cell-height = 20%
 # Enable Option key as Alt for proper modifier key support
 macos-option-as-alt = true
 
-custom-shader = ~/.config/ghostty/shaders/cursor_warp.glsl
+custom-shader = /Users/jarrod.folino/.config/ghostty/shaders/cursor_tail.glsl
