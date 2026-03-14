@@ -1,0 +1,15 @@
+
+name: cerbos_playground
+root: ~/Code/cerbos_playground
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - ji && nvim
+  - console:
+      panes:
+        - ji 
+  - server:
+      panes:
+        - ji 

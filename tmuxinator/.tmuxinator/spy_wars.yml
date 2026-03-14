@@ -1,0 +1,23 @@
+
+name: spy_wars
+root: ~/Code/spy_wars/
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - ji && nvim
+  - console:
+      layout: "c2f1,133x28,0,0{26x28,0,0,10,106x28,27,0,11}"
+      panes:
+        - date
+        - devbox shell
+  - server:
+      panes:
+        - ji
+  - claude:
+      layout: "c2f1,133x28,0,0{26x28,0,0,10,106x28,27,0,11}"
+      panes:
+        - date 
+        - ji
+
