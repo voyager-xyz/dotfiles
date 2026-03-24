@@ -17,7 +17,7 @@ clipboard-paste-protection = false
 ## Theme
 theme = Molokai
 font-family = FiraCode Nerd Font
-font-size = 20
+font-size = 18
 
 adjust-cell-width = 3%
 adjust-cell-height = 20%

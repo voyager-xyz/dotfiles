@@ -10,7 +10,6 @@ jh () {
   echo "jprs -> List open PRs for repos and users"
   echo "tt -> change project"
   echo "up -> go to root dir of git project"
-  echo "ji -> enhance shell"
 }
 
 jg () {
@@ -23,30 +22,7 @@ jg () {
     fi
 }
 
-jga () {
-    up
-    LINK=$(cat .git/config | grep url | cut -d "=" -f 2 | sed "s/ //")
-    if [[ "$LINK" == git@* ]]; then
-      open $(echo $LINK | sed "s/:/\//" | sed "s/git@/https:\/\//" | sed "s/.git$//" | xargs -I {} echo {}/actions)
-    else
-      open $(echo $LINK | sed "s/.git$//" | xargs -I {} echo {}/actions)
-    fi
-}
 
-jl() {
-    selected_directory=$(jq -r '.. | .url? // empty' "$HOME/Library/Application Support/BraveSoftware/Brave-Browser/Default/Bookmarks" | sort | fzf --prompt="Select a url")
-    open $selected_directory
-}
-ttu() {
-    selected_directory=$(ls $BASE_DIR | sort | fzf)
-
-    if [[ -n $selected_directory ]]; then
-        (cd "$BASE_DIR/$selected_directory" && DEVBOX_SERVICES_UP=true tmuxinator start $selected_directory)
-    else
-        echo "No directory selected."
-        return 1
-    fi
-}
 tt() {
     selected_directory=$(cat ${HOME}/Code/dotfiles/tmuxinator/.tmuxinator/* | grep name | sed 's/name: //' | sort | fzf)
 
@@ -68,17 +44,10 @@ up() {
   fi
 }
 
-ji() {
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-    eval "$(zoxide init zsh)"
-    . "$HOME/.atuin/bin/env"
-    eval "$(atuin init zsh)"
-    eval "$(starship init zsh)"
-    eval "$(pyenv init -)"
-    eval "$(rbenv init - --no-rehash zsh)"
+bk() {
+    branch=$(git rev-parse --abbrev-ref HEAD | sed 's|/|%2F|g')
+    project=$(git remote get-url origin | sed 's|.*github.com[:/]\([^/]*\)/\([^.]*\).*|\2|')
+    open "https://buildkite.com/culture-amp/${project}/builds?branch=${branch}"
 }
 
 js() {
@@ -90,38 +59,5 @@ js() {
       echo "Clipboard is empty!"
       exit 1
     fi
-
     pbpaste > "$OUTPUT_DIR/$FILENAME"
-}
-
-jprs() {
-    # Usage: jprs "repo1 repo2" "user1 user2"
-    # Example: jprs "owner/repo1 owner/repo2" "username1 username2"
-
-    if [ -z "$1" ] || [ -z "$2" ]; then
-        echo "Usage: jprs \"repo1 repo2\" \"user1 user2\""
-        echo "Example: jprs \"owner/repo1 owner/repo2\" \"username1 username2\""
-        return 1
-    fi
-
-    local repos=("${(@s/ /)1}")
-    local users=("${(@s/ /)2}")
-
-    echo "Searching for open PRs..."
-    echo "Repos: ${repos[@]}"
-    echo "Users: ${users[@]}"
-    echo ""
-
-    for repo in $repos; do
-        echo "=== Repository: $repo ==="
-        for user in $users; do
-            local prs=$(gh pr list --repo "$repo" --author "$user" --state open --json number,title,url,createdAt --jq '.[] | "#\(.number) - \(.title)\n  Created: \(.createdAt | sub("T.*"; ""))\n  \(.url)\n"')
-
-            if [ -n "$prs" ]; then
-                echo "  Author: $user"
-                echo "$prs"
-            fi
-        done
-        echo ""
-    done
 }

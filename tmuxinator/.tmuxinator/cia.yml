@@ -1,17 +1,19 @@
-name: murmur
-root: ~/Code/murmur
+
+name: cia
+root: ~/Code/cia/
 
 windows:
   - editor:
       layout: main-vertical
       panes:
-        - nvim && devbox shell
+        - ls && nvim
   - console:
+      panes:
+        - devbox shell
+  - server:
       panes:
         - devbox shell
   - claude:
       panes:
-        - devbox shell
-  - devbox_services:
-      panes:
-        - devbox shell
+        - ls
+

@@ -1,6 +1,5 @@
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 xcode-select --install
-curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 brew install --cask font-jetbrains-mono-nerd-font font-caskaydia-cove-nerd-font font-iosevka-term-nerd-font font-fira-mono-nerd-font
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash

@@ -5,13 +5,13 @@ windows:
   - editor:
       layout: main-vertical
       panes:
-        - ji && nvim && devbox shell
+        - nvim
   - console:
       panes:
-        - ji && devbox shell
+        - devbox shell
   - claude:
       panes:
-        - ji && devbox shell
+        - devbox shell
   - devbox_services:
       panes:
-        - ji && [[ "$DEVBOX_SERVICES_UP" == "true" ]] && devbox services up || true
+        - devbox shell
