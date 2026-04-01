@@ -1,0 +1,12 @@
+name: ruby_ast_analyser
+root: ~/Code/ruby_ast_analyser
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - ls
+        - echo hello 
+  - console:
+      panes:
+        - ls 

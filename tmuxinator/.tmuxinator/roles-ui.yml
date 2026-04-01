@@ -8,4 +8,10 @@ windows:
         - ls && nvim
   - console:
       panes:
-        - ls 
+        - devbox shell 
+  - claude:
+      panes:
+        - ls
+  - devbox:
+      panes:
+        - devbox shell

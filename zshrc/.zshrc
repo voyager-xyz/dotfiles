@@ -1,4 +1,5 @@
 export LC_CTYPE=en_US.UTF-8
+export TERM=xterm-256color
 export LC_ALL=en_US.UTF-8
 
 export ZSH="$HOME/.oh-my-zsh"
@@ -38,5 +39,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -f "${HOME}/.cultureamp" ] && source "${HOME}/.cultureamp"
 # tmuxinator start "notes"
 
-# The next line was added by hotel, leave it at the bottom of this file
-source /Users/jarrod.folino/.config/hotel/config.zsh

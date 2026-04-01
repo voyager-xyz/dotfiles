@@ -9,6 +9,9 @@ windows:
   - console:
       panes:
         - devbox shell
+  - console2:
+      panes:
+        - devbox shell
   - claude:
       panes:
         - devbox shell
