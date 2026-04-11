@@ -5,7 +5,7 @@ windows:
   - editor:
       layout: main-vertical
       panes:
-        - ls && nvim
+        - ls && NVIM_APPNAME=nvim-astronvim
   - console:
       panes:
         - devbox shell 
