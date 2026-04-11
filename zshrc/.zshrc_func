@@ -10,6 +10,8 @@ jh () {
   echo "jprs -> List open PRs for repos and users"
   echo "tt -> change project"
   echo "up -> go to root dir of git project"
+  echo "cmotd -> Show a random Claude tip"
+  echo "creport -> Show latest Claude usage report"
 }
 
 jg () {
@@ -60,4 +62,28 @@ js() {
       exit 1
     fi
     pbpaste > "$OUTPUT_DIR/$FILENAME"
+}
+
+cmotd() {
+    local tips_dir="$HOME/Code/ai/notes/claude_tips_and_tricks"
+    local files=("$tips_dir"/tip_*.md)
+    local file="${files[$RANDOM % ${#files[@]}]}"
+    if command -v glow &>/dev/null; then
+        glow "$file"
+    else
+        cat "$file"
+    fi
+}
+
+creport() {
+    local latest=$(ls ~/Code/ai/notes/claude_insights/*.md 2>/dev/null | sort | tail -1)
+    if [[ -z "$latest" ]]; then
+        echo "No reports yet. Run: claude-digest"
+        return 1
+    fi
+    if command -v glow &>/dev/null; then
+        glow "$latest"
+    else
+        cat "$latest"
+    fi
 }
