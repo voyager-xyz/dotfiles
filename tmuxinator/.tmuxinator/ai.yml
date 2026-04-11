@@ -1,0 +1,22 @@
+name: ai
+root: ~/Code/ai
+
+windows:
+  - editor:
+      layout: main-vertical
+      options:
+        main-pane-width: "50%"
+      panes:
+        - NVIM_APPNAME=nvim-astro nvim
+        - NVIM_APPNAME=nvim-astro nvim
+        - creport
+  - editor2:
+      panes:
+        - NVIM_APPNAME=nvim-astro nvim
+  - console:
+      panes:
+        - creport 
+  - console2:
+      panes:
+        - creport 
+
