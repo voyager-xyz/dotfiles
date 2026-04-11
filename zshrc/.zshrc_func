@@ -76,11 +76,26 @@ cmotd() {
 }
 
 creport() {
-    local latest=$(ls ~/Code/ai/notes/claude_insights/*.md 2>/dev/null | sort | tail -1)
+    local insights_dir=~/Code/ai/notes/claude_insights
+    local latest=$(ls "$insights_dir"/*.md 2>/dev/null | sort | tail -1)
+    local run_cmd="~/.claude_tracker/run-digest.sh"
+
     if [[ -z "$latest" ]]; then
-        echo "No reports yet. Run: claude-digest"
+        echo "No reports found. Generate one with:"
+        echo "  $run_cmd"
         return 1
     fi
+
+    local today=$(date +%Y-%m-%d)
+    local report_date=$(basename "$latest" .md)
+
+    if [[ "$report_date" != "$today" ]]; then
+        echo "⚠️  Last report is from $report_date (today is $today)."
+        echo "   The 09:10 cron may have failed. Check: cat /tmp/claude-digest-error.log"
+        echo "   To run manually: $run_cmd"
+        echo ""
+    fi
+
     if command -v glow &>/dev/null; then
         glow "$latest"
     else
