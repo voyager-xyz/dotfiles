@@ -1,0 +1,97 @@
+#!/bin/zsh
+set -euo pipefail
+
+OUT="task-prompt.md"
+
+if [[ -e "$OUT" ]]; then
+  print -u2 -- "$OUT already exists in $(pwd) — refusing to overwrite"
+  exit 1
+fi
+
+REPO=""
+if TOPLEVEL=$(git rev-parse --show-toplevel 2>/dev/null); then
+  REPO=$(basename "$TOPLEVEL")
+fi
+[[ -z "$REPO" ]] && REPO="<repo-name>"
+
+cat > "$OUT" <<'EOF'
+# Task Prompt — __REPO__
+
+> Paste this entire file into a fresh Claude Code conversation, filled in for the task at hand. Sections you don't need can be left blank — Claude will skip them silently.
+
+---
+
+## Instructions to Claude
+
+You are starting a task in the `__REPO__` repository. Before doing anything else, load context as follows:
+
+1. **Read `CLAUDE.md`** at the project root for repo-level context (architecture, build/test commands, conventions). This is required even if every other section below is empty.
+
+2. **For each populated section in Part B, fetch the referenced material upfront, in parallel where possible:**
+   - **Atlassian Links** — fetch via the Atlassian MCP. Use `getJiraIssue` for Jira URLs (`/browse/<KEY>`) and `getConfluencePage` for Confluence URLs (`/wiki/spaces/...`). If a Jira ticket references linked issues that look relevant, fetch those too.
+   - **Related pull requests** — fetch the full PR description, diff, and review comments via the GitHub MCP using `pull_request_read`. Treat both open and merged PRs as authoritative context.
+   - **Links** — pointers to external/community references. Use `WebFetch` only when a deliverable explicitly calls for external corroboration; otherwise treat as background.
+   - **Associated GitHub projects** — for each entry, check whether `.other_projects/<repo-name>` already exists. If it does, skip. If not, `git clone <url> .other_projects/<repo-name>` (creating `.other_projects/` first if needed). After cloning, treat the contents as **read-only** under the same rules as the next section.
+   - **Files in this repo** — read with the `Read` tool.
+   - **Files in `.other_projects/`** — read with the `Read` tool. **Read-only.** Never edit files in `.other_projects/`, never propose changes inside that directory, and never include those paths in any commit. The folder holds gitignored sibling checkouts kept purely for cross-reference.
+
+3. **Skip any empty section silently.** Do not warn, do not ask the user to fill it in, do not list missing fields.
+
+4. **If a fetch fails** (broken URL, missing permission, file not found, clone error), stop and tell the user which specific reference failed and why.
+
+5. **Your first response after loading context must be:**
+   - A short summary (a few bullets) of what you loaded and how you understand the task.
+   - 1–3 targeted clarifying questions if anything is ambiguous. If nothing is ambiguous, say so.
+   - Then **wait** for the user to confirm or answer. Do not propose an implementation plan, do not edit code, do not run builds.
+
+---
+
+## Part B — Task context
+
+### Task summary
+
+<one or two sentences describing the work. Optionally add a **Working hypothesis to verify or falsify:** line and a **Deliverables (treat as a checklist):** numbered list when the task is investigative — leave blank to skip>
+
+### Known facts / pre-loaded context (verify, don't assume)
+
+<bullet list of facts already known about the system that Claude should verify against the loaded sources rather than assume — leave blank to skip>
+
+### Atlassian Links
+
+<one URL per line — Jira `/browse/<KEY>` or Confluence `/wiki/spaces/...`. Leave blank to skip>
+
+### Related pull requests
+
+<one URL per line, open or merged — leave blank to skip>
+
+### Links
+
+<one URL per line — external/community references (docs, support articles, source on GitHub, etc.). Leave blank to skip>
+
+### Associated GitHub projects
+
+<one repo per line — full clone URL (`git@github.com:org/repo.git` or `https://github.com/org/repo.git`) or `org/repo` shorthand. Claude will clone any that aren't already present under `.other_projects/<repo-name>`. Leave blank to skip>
+
+### Files in this repo to read
+
+<one repo-relative path per line — leave blank to skip>
+
+### Files in `.other_projects/` to read (read-only)
+
+<one path per line, e.g. `.other_projects/comment-summary-service/...` — leave blank to skip>
+
+### Constraints / non-goals
+
+<anything Claude should avoid, or items explicitly out of scope — leave blank to skip>
+
+---
+
+## Part C — Output
+
+<how the result should be delivered, e.g. "Save the findings to a single file called `results.md` with subheadings", "Open a PR against `main`", or "Reply inline only" — leave blank to skip>
+EOF
+
+# Substitute repo name (sentinel pattern avoids escaping every $ and ` in the heredoc).
+sed -i.bak "s|__REPO__|${REPO}|g" "$OUT" && rm "${OUT}.bak"
+
+print -- "wrote ./$OUT"

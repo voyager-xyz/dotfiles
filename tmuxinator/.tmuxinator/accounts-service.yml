@@ -1,5 +1,5 @@
-name: permissions-service
-root: ~/Code/permissions-service
+name: accounts-service
+root: ~/Code/accounts-service
 
 windows:
   - editor:

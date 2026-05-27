@@ -1,5 +1,5 @@
-name: ai
-root: ~/Code/ai
+name: ca-launchdarkly-kotlin
+root: ~/Code/ca-launchdarkly-kotlin
 
 windows:
   - editor:

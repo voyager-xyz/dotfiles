@@ -2,19 +2,20 @@ BASE_DIR="${HOME}/Code"
 
 SCRIPTS_DIR="${BASE_DIR}/dotfiles/_scripts"
 
-jh () {
-  echo "jh -> Show this help"
-  echo "jg -> Open github project in browser"
-  echo "jga -> Open github actions in browser"
-  echo "jl -> Open Brave Bookmarks"
-  echo "jprs -> List open PRs for repos and users"
-  echo "tt -> change project"
-  echo "up -> go to root dir of git project"
-  echo "cmotd -> Show a random Claude tip"
-  echo "creport -> Show latest Claude usage report"
+,m () {
+    find ~/.claude/projects -name "*.md" -path "*/memory/*" | fzf | xargs cat
 }
 
-jg () {
+,h () {
+  echo ",h -> Show this help"
+  echo ",g -> Open github project in browser"
+  echo ",m -> Claude memory"
+  echo ",b -> Open buildkite"
+  echo "tt -> change project"
+  echo "up -> go to root dir of git project"
+}
+
+,g () {
     up
     LINK=$(cat .git/config | grep url | cut -d "=" -f 2 | sed "s/ //")
     if [[ "$LINK" == git@* ]]; then
@@ -46,33 +47,10 @@ up() {
   fi
 }
 
-bk() {
+,b() {
     branch=$(git rev-parse --abbrev-ref HEAD | sed 's|/|%2F|g')
     project=$(git remote get-url origin | sed 's|.*github.com[:/]\([^/]*\)/\([^.]*\).*|\2|')
     open "https://buildkite.com/culture-amp/${project}/builds?branch=${branch}"
-}
-
-js() {
-    OUTPUT_DIR="$HOME/Code/notes/quick_notes"
-    TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
-    FILENAME="${TIMESTAMP}_UTC.txt"
-    mkdir -p "$OUTPUT_DIR"
-    if [ -z "$(pbpaste)" ]; then
-      echo "Clipboard is empty!"
-      exit 1
-    fi
-    pbpaste > "$OUTPUT_DIR/$FILENAME"
-}
-
-cmotd() {
-    local tips_dir="$HOME/Code/ai/notes/claude_tips_and_tricks"
-    local files=("$tips_dir"/tip_*.md)
-    local file="${files[$RANDOM % ${#files[@]}]}"
-    if command -v glow &>/dev/null; then
-        glow "$file"
-    else
-        cat "$file"
-    fi
 }
 
 creport() {

@@ -1,0 +1,13 @@
+name: observe
+root: ~/Code/observe
+
+windows:
+  - main:
+      panes:
+        - devbox run start
+  - console:
+      panes:
+        - devbox shell
+  - claude:
+      panes:
+        - devbox shell

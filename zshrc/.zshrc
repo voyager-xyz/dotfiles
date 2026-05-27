@@ -2,13 +2,30 @@ export LC_CTYPE=en_US.UTF-8
 export TERM=xterm-256color
 export LC_ALL=en_US.UTF-8
 
+export PATH="$HOME/Code/dotfiles/scripts:$PATH"
+
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(git rails vscode)
+
 source $ZSH/oh-my-zsh.sh
+source /Users/jarrod.folino/Code/ruby_ast_analyser/completions/make-tasks.zsh
+
+autoload -Uz compinit
+compinit
 
 alias gg="lazygit"
 alias m="make"
+
+# claude
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1
+export OTEL_METRICS_EXPORTER=otlp
+export OTEL_LOGS_EXPORTER=otlp
+export OTEL_TRACES_EXPORTER=otlp
+export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:5080/api/default
+export OTEL_EXPORTER_OTLP_HEADERS=Authorization=Basic cm9vdEBleGFtcGxlLmNvbTpDb21wbGV4cGFzcyMxMjM=
 
 # ruby
 alias be="bundle exec"
@@ -27,8 +44,9 @@ alias nastro="NVIM_APPNAME=nvim-astro nvim"
 alias nchad="NVIM_APPNAME=nvim-chad nvim"
 alias nlazy="NVIM_APPNAME=nvim-lazy nvim"
 
-alias tka="tmux kill-server"
+alias tko="tmux kill-server"
 alias dclaude="claude --dangerously-skip-permissions"
+alias j="jupyter"
 #############
 # eval "$(zoxide init zsh)"
 source ~/.zshrc_func
@@ -52,3 +70,6 @@ precmd_functions+=(report_tmux_status)
 
 [ -f "${HOME}/.cultureamp" ] && source "${HOME}/.cultureamp"
 
+
+# The next line was added by hotel, leave it at the bottom of this file
+source /Users/jarrod.folino/.config/hotel/config.zsh

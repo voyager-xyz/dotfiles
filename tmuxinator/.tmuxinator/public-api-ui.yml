@@ -1,0 +1,17 @@
+name: public-api-ui
+root: ~/Code/public-api-ui
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - ls && NVIM_APPNAME=nvim-astronvim
+  - console:
+      panes:
+        - devbox shell 
+  - claude:
+      panes:
+        - ls
+  - devbox:
+      panes:
+        - devbox shell

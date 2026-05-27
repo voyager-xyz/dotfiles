@@ -1,11 +1,8 @@
-name: ai
-root: ~/Code/ai
+name: simple_llm
+root: ~/Code/ai/simple_llm/
 
 windows:
   - editor:
-      panes:
-        - NVIM_APPNAME=nvim-astro nvim
-  - editor2:
       panes:
         - NVIM_APPNAME=nvim-astro nvim
   - console:

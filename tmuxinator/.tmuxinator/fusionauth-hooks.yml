@@ -1,10 +1,10 @@
-name: ruby_ast_analyser
-root: ~/Code/ruby_ast_analyser
+name: fusionauth-hooks
+root: ~/Code/fusionauth-hooks
 
 windows:
   - editor:
       panes:
-        - n
+        - NVIM_APPNAME=nvim-astro nvim
   - console:
       panes:
         - ls 
