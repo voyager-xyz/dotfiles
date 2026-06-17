@@ -1,13 +1,11 @@
-name: __sandbox
-root: ~/Code/__sandbox
+name: agent-workflows
+root: ~/Code/agent-workflows
 
 windows:
   - editor:
       layout: main-vertical
       panes:
         - NVIM_APPNAME=nvim-astro nvim
-        - pwd
-        - pwd
   - console:
       panes:
-        - pwd 
+        - ls 

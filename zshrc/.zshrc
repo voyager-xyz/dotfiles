@@ -45,10 +45,9 @@ alias nchad="NVIM_APPNAME=nvim-chad nvim"
 alias nlazy="NVIM_APPNAME=nvim-lazy nvim"
 
 alias tko="tmux kill-server"
-alias dclaude="claude --dangerously-skip-permissions"
 alias j="jupyter"
+alias h="hotel"
 #############
-# eval "$(zoxide init zsh)"
 source ~/.zshrc_func
 export CARAPACE_BRIDGES='zsh,bash,inshellisense'
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
@@ -65,8 +64,6 @@ report_tmux_status() {
     fi
   fi
 }
-# Hook it into Zsh's precmd function
-precmd_functions+=(report_tmux_status) 
 
 [ -f "${HOME}/.cultureamp" ] && source "${HOME}/.cultureamp"
 

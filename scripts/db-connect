@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# Fetches the roles-service RDS master credentials from AWS Secrets Manager
+# and prints a ready-to-run psql command. The password is exported into the
+# environment (PGPASSWORD) rather than embedded in the printed command, so it
+# never shows up in your shell history or terminal scrollback.
+#
+# Usage:
+#   source scripts/db-connect.sh           # sets PGPASSWORD + prints the command
+#
+# NOTE: run with `source` (or `.`) so PGPASSWORD persists in your shell.
+#       Requires: aws CLI (authenticated), jq, psql.
+
+set -euo pipefail
+
+SECRET_ID="/roles-service/development-us/rds/MasterCredentials"
+
+for cmd in aws jq; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "error: '$cmd' is required but not installed" >&2
+    return 1 2>/dev/null || exit 1
+  fi
+done
+
+secret_json="$(aws secretsmanager get-secret-value \
+  --secret-id "$SECRET_ID" \
+  --query SecretString \
+  --output text)"
+
+host="$(jq -r '.host'     <<<"$secret_json")"
+port="$(jq -r '.port'     <<<"$secret_json")"
+user="$(jq -r '.username' <<<"$secret_json")"
+dbname="$(jq -r '.dbname' <<<"$secret_json")"
+
+psql_cmd="psql --host=$host --port=$port --username=$user --dbname=$dbname"
+
+echo "PGPASSWORD is set in this shell. Run:"
+echo
+echo "  $psql_cmd"
+echo
+echo "Copy the password from:"
+echo "https://us-west-2.console.aws.amazon.com/secretsmanager/secret?name=%2Froles-service%2Fdevelopment-us%2Frds%2FMasterCredentials&region=us-west-2"

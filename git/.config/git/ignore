@@ -3,3 +3,4 @@ tmux_command.sh
 jarrod_scripts/
 todo.txt
 .other_projects/*
+.helper_scripts/*

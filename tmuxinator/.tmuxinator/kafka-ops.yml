@@ -1,5 +1,5 @@
-name: ai
-root: ~/Code/ai/llm2/
+name: kafka-ops
+root: ~/Code/kafka-ops
 
 windows:
   - "":

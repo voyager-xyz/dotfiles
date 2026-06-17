@@ -6,10 +6,10 @@
 // Smoke effect settings
 #define SMOKE_COLOR vec3(1., 1., 1.0)       // Base color of smoke
 #define SMOKE_RADIUS 0.011                 // How far the smoke spreads
-#define SMOKE_SPEED 0.5                        // Speed of smoke movement
+#define SMOKE_SPEED 0.1                        // Speed of smoke movement
 #define SMOKE_SCALE 25.0                       // Scale of smoke detail
 #define SMOKE_INTENSITY 0.2                    // Intensity of the smoke effect
-#define SMOKE_RISE_HEIGHT 0.14                 // How high the smoke rises
+#define SMOKE_RISE_HEIGHT 0.1                 // How high the smoke rises
 #define ALPHA_MAX 0.5                          // Maximum opacity for smoke
 #define VERTICAL_BIAS 1.0       
 
