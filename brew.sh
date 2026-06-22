@@ -9,9 +9,11 @@ brew install --cask cardinal-search
 brew tap debugtheworldbot/keystats
 brew install keystats
 git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
-apps=(tmuxinator stow pyenv go zoxide rbenv fzf carapace xz neovim gh openssl@3 starship bat lazygit yazi stow tmux carapace pyenv fontconfig libpng rbenv fzf neovim ripgrep zoxide)
+[ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+apps=(bash tmuxinator stow pyenv go zoxide rbenv fzf carapace xz neovim gh openssl@3 starship bat lazygit yazi stow tmux carapace pyenv fontconfig libpng rbenv fzf neovim ripgrep zoxide)
 for app in "${apps[@]}"; do
     echo "Installing $app."
+    brew install "$app"
 done
 
 pyenv install 3.13.11

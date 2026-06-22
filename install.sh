@@ -6,6 +6,7 @@ stow -d $BASE_DIR -R -t ~ ghostty --adopt
 stow -d $BASE_DIR -R -t ~ yazi --adopt
 stow -d $BASE_DIR -R -t ~ tmuxinator
 stow -d $BASE_DIR -R -t ~ tmux
+stow -d $BASE_DIR -R -t ~ nvim-theme
 stow -d $BASE_DIR -R -t ~ git --adopt
 
 . ~/.zshrc

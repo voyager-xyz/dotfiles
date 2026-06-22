@@ -26,6 +26,14 @@ export OTEL_TRACES_EXPORTER=otlp
 export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:5080/api/default
 export OTEL_EXPORTER_OTLP_HEADERS=Authorization=Basic cm9vdEBleGFtcGxlLmNvbTpDb21wbGV4cGFzcyMxMjM=
+alias ,c="claude --dangerously-skip-permissions"
+
+# tmux theme switcher (fzf). Type ,u at any prompt — works in or out of tmux.
+alias ,u="$HOME/.config/tmux-theme/switch.sh"
+
+# nvim colorscheme switcher (fzf). Type ,un at any prompt — applies to running
+# nvim instances and persists for new ones (nvim-astro reads the choice).
+alias ,un="$HOME/.config/nvim-theme/switch.sh"
 
 # ruby
 alias be="bundle exec"
@@ -70,3 +78,7 @@ report_tmux_status() {
 
 # The next line was added by hotel, leave it at the bottom of this file
 source /Users/jarrod.folino/.config/hotel/config.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
