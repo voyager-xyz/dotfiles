@@ -1,5 +1,6 @@
 #!/bin/zsh
 BASE_DIR="${HOME}/Code/dotfiles"
+sh ./scripts/tmuxinator-generate
 stow -d $BASE_DIR -R -t ~ zshrc --adopt
 stow -d $BASE_DIR -R -t ~ starship --adopt
 stow -d $BASE_DIR -R -t ~ ghostty --adopt

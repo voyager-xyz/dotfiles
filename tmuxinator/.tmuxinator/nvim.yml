@@ -1,8 +1,0 @@
-name: nvim
-root: ~/.config/nvim
-
-windows:
-  - "1":
-      layout: main-vertical
-      panes:
-        - NVIM_APPNAME=nvim-astro nvim

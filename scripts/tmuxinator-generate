@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+#
+# tmuxinator-generate — create a tmuxinator project config for every folder
+# inside a directory, instead of hand-maintaining one .yml per project.
+#
+# Usage:
+#   tmuxinator-generate [-d SCAN_DIR] [-o OUT_DIR] [-f] [-n]
+#
+# Options:
+#   -d SCAN_DIR  Directory whose subfolders become projects (default: ~/Code)
+#   -o OUT_DIR   Where to write the .yml files     (default: ~/.tmuxinator)
+#   -f           Force: overwrite configs that already exist
+#   -n           Dry run: print what would happen, write nothing
+#   -h           Show this help
+#
+# By default existing configs are left untouched, so any project you have
+# hand-customized is safe. Use -f to regenerate everything from the template.
+
+set -euo pipefail
+
+SCAN_DIR="${HOME}/Code"
+OUT_DIR="${HOME}/.tmuxinator"
+FORCE=0
+DRY_RUN=0
+
+usage() {
+  sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'
+  exit "${1:-0}"
+}
+
+while getopts ":d:o:fnh" opt; do
+  case "$opt" in
+    d) SCAN_DIR="$OPTARG" ;;
+    o) OUT_DIR="$OPTARG" ;;
+    f) FORCE=1 ;;
+    n) DRY_RUN=1 ;;
+    h) usage 0 ;;
+    \?) echo "Unknown option: -$OPTARG" >&2; usage 1 ;;
+    :) echo "Option -$OPTARG requires an argument" >&2; usage 1 ;;
+  esac
+done
+
+# Expand a leading ~ since args come in as plain strings.
+SCAN_DIR="${SCAN_DIR/#\~/$HOME}"
+OUT_DIR="${OUT_DIR/#\~/$HOME}"
+
+if [[ ! -d "$SCAN_DIR" ]]; then
+  echo "Scan directory does not exist: $SCAN_DIR" >&2
+  exit 1
+fi
+
+[[ "$DRY_RUN" -eq 1 ]] || mkdir -p "$OUT_DIR"
+
+# Render the project template. $1 = project name, $2 = absolute project path.
+render() {
+  local name="$1" path="$2"
+  cat <<EOF
+name: ${name}
+root: ${path}
+
+windows:
+  - "1":
+      panes:
+        - pwd
+  - "2":
+      panes:
+        - pwd
+  - "3":
+      panes:
+        - pwd
+  - "4":
+      panes:
+        - pwd
+  - "5":
+      panes:
+        - pwd
+
+EOF
+}
+
+created=0 skipped=0
+
+for dir in "$SCAN_DIR"/*/; do
+  [[ -d "$dir" ]] || continue
+  name="$(basename "$dir")"
+  # Skip hidden folders (e.g. .git checkouts left lying around).
+  [[ "$name" == .* ]] && continue
+
+  # Use a tilde-relative root so the config stays portable across machines.
+  root="${dir%/}"
+  root="~${root#$HOME}"
+
+  out="${OUT_DIR}/${name}.yml"
+
+  if [[ -e "$out" && "$FORCE" -ne 1 ]]; then
+    echo "skip    ${name} (exists; use -f to overwrite)"
+    skipped=$((skipped + 1))
+    continue
+  fi
+
+  if [[ "$DRY_RUN" -eq 1 ]]; then
+    echo "would write ${out}"
+  else
+    render "$name" "$root" > "$out"
+    echo "write   ${name} -> ${out}"
+  fi
+  created=$((created + 1))
+done
+
+echo
+echo "Done: ${created} written, ${skipped} skipped."
+[[ "$DRY_RUN" -eq 1 ]] && echo "(dry run — no files were changed)"
+
+exit 0

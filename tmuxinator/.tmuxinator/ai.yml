@@ -4,16 +4,17 @@ root: ~/Code/ai
 windows:
   - "1":
       panes:
-        - pwd 
+        - pwd
   - "2":
       panes:
         - pwd
   - "3":
       panes:
-        - pwd 
+        - pwd
   - "4":
       panes:
-        - pwd 
+        - pwd
   - "5":
       panes:
         - pwd
+

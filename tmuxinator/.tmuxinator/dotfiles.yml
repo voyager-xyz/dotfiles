@@ -3,9 +3,18 @@ root: ~/Code/dotfiles
 
 windows:
   - "1":
-      layout: main-vertical
       panes:
-        - ls && NVIM_APPNAME=nvim-astro nvim
+        - pwd
   - "2":
       panes:
-        - ls 
+        - pwd
+  - "3":
+      panes:
+        - pwd
+  - "4":
+      panes:
+        - pwd
+  - "5":
+      panes:
+        - pwd
+
