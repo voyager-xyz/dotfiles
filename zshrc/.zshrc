@@ -43,6 +43,10 @@ alias ,u="$HOME/.config/tmux-theme/switch.sh"
 # nvim instances and persists for new ones (nvim-astro reads the choice).
 alias ,un="$HOME/.config/nvim-theme/switch.sh"
 
+# ghostty shader switcher (fzf). Type ,s at any prompt — live-previews each
+# shader as you scroll and reloads Ghostty's config on selection.
+alias ,s="$HOME/.config/ghostty/shader-switch.sh"
+
 # ruby
 alias be="bundle exec"
 alias bi="bundle install"
