@@ -2,15 +2,15 @@ name: conversations-api
 root: ~/Code/conversations-api
 
 windows:
-  - editor:
+  - "1":
       panes:
         - ls &&   NVIM_APPNAME=nvim-astro nvim 
-  - console:
+  - "2":
       panes:
         - ls && devbox shell
-  - claude:
+  - "3":
       panes:
         - ls && devbox shell
-  - devbox_services:
+  - "4":
       panes:
         - ls && [[ "$DEVBOX_SERVICES_UP" == "true" ]] && devbox services up || true

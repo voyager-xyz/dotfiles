@@ -2,18 +2,18 @@ name: kafka-ops
 root: ~/Code/kafka-ops
 
 windows:
-  - "":
+  - "1":
       panes:
         - pwd 
-  - "":
+  - "2":
       panes:
         - pwd
-  - "":
+  - "3":
       panes:
         - pwd 
-  - "":
+  - "4":
       panes:
         - pwd 
-  - "":
+  - "5":
       panes:
         - pwd

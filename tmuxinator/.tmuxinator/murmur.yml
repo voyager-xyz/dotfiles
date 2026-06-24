@@ -2,19 +2,19 @@ name: murmur
 root: ~/Code/murmur
 
 windows:
-  - editor:
+  - "1":
       layout: main-vertical
       panes:
         - NVIM_APPNAME=nvim-astro nvim && devbox shell
-  - console:
+  - "2":
       panes:
         - devbox shell
-  - console2:
+  - "3":
       panes:
         - devbox shell
-  - claude:
+  - "4":
       panes:
         - devbox shell
-  - devbox_services:
+  - "5":
       panes:
         - devbox shell

@@ -2,12 +2,12 @@ name: ruby_ast_analyser
 root: ~/Code/ruby_ast_analyser
 
 windows:
-  - editor:
+  - "1":
       panes:
         - n
-  - console:
+  - "2":
       panes:
         - ls 
-  - claude:
+  - "3":
       panes:
         - ls 

@@ -2,13 +2,13 @@ name: simple_llm
 root: ~/Code/ai/simple_llm/
 
 windows:
-  - editor:
+  - "1":
       panes:
         - NVIM_APPNAME=nvim-astro nvim
-  - console:
+  - "2":
       panes:
         - creport 
-  - console2:
+  - "3":
       panes:
         - creport 
 

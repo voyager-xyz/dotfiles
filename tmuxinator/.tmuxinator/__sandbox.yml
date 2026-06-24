@@ -2,12 +2,12 @@ name: __sandbox
 root: ~/Code/__sandbox
 
 windows:
-  - editor:
+  - "1":
       layout: main-vertical
       panes:
         - NVIM_APPNAME=nvim-astro nvim
         - pwd
         - pwd
-  - console:
+  - "2":
       panes:
         - pwd 

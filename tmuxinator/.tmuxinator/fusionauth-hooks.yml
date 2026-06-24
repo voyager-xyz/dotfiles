@@ -2,12 +2,12 @@ name: fusionauth-hooks
 root: ~/Code/fusionauth-hooks
 
 windows:
-  - editor:
+  - "1":
       panes:
         - NVIM_APPNAME=nvim-astro nvim
-  - console:
+  - "2":
       panes:
         - ls 
-  - claude:
+  - "3":
       panes:
         - ls 

@@ -2,10 +2,10 @@ name: accounts-service
 root: ~/Code/accounts-service
 
 windows:
-  - editor:
+  - "1":
       layout: main-vertical
       panes:
         - NVIM_APPNAME=nvim-astro nvim
-  - console:
+  - "2":
       panes:
         - ls 

@@ -2,12 +2,12 @@ name: observe
 root: ~/Code/observe
 
 windows:
-  - main:
+  - "1":
       panes:
         - devbox run start
-  - console:
+  - "2":
       panes:
         - devbox shell
-  - claude:
+  - "3":
       panes:
         - devbox shell

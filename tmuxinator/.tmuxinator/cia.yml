@@ -3,16 +3,16 @@ name: cia
 root: ~/Code/cia/
 
 windows:
-  - editor:
+  - "1":
       panes:
         - ls && NVIM_APPNAME=nvim-astro nvim
-  - console:
+  - "2":
       panes:
         - devbox shell
-  - server:
+  - "3":
       panes:
         - devbox shell
-  - claude:
+  - "4":
       panes:
         - ls
 

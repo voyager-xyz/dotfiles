@@ -2,7 +2,7 @@ name: nvim
 root: ~/.config/nvim
 
 windows:
-  - editor:
+  - "1":
       layout: main-vertical
       panes:
         - NVIM_APPNAME=nvim-astro nvim

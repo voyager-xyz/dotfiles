@@ -2,16 +2,16 @@ name: diagrams
 root: ~/Code/diagrams/
 
 windows:
-  - editor:
+  - "1":
       panes:
         - NVIM_APPNAME=nvim-astro nvim
-  - editor2:
+  - "2":
       panes:
         - NVIM_APPNAME=nvim-astro nvim
-  - console:
+  - "3":
       panes:
         - creport 
-  - console2:
+  - "4":
       panes:
         - creport 
 

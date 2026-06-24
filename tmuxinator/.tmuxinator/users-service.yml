@@ -2,16 +2,16 @@ name: users-service
 root: ~/Code/users-service
 
 windows:
-  - editor:
+  - "1":
       layout: main-vertical
       panes:
         - ls && NVIM_APPNAME=nvim-astro nvim && devbox shell
-  - console:
+  - "2":
       panes:
         - ls && devbox shell
-  - claude:
+  - "3":
       panes:
         - ls && devbox shell
-  - devbox_services:
+  - "4":
       panes:
         - ls && [[ "$DEVBOX_SERVICES_UP" == "true" ]] && devbox services up || true

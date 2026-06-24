@@ -2,10 +2,10 @@ name: dotfiles
 root: ~/Code/dotfiles
 
 windows:
-  - editor:
+  - "1":
       layout: main-vertical
       panes:
         - ls && NVIM_APPNAME=nvim-astro nvim
-  - console:
+  - "2":
       panes:
         - ls 

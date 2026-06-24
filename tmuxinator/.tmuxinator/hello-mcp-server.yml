@@ -2,14 +2,14 @@ name: hello-mcp-server
 root: ~/Code/hello-mcp-server
 
 windows:
-  - editor:
+  - "1":
       layout: main-vertical
       panes:
         - ls && NVIM_APPNAME=nvim-astro nvim
-  - console:
+  - "2":
       panes:
         - ls 
-  - console2:
+  - "3":
       panes:
         - ls 
 
