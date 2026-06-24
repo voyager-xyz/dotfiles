@@ -1,0 +1,19 @@
+; Stowed to ~/.config/git/config. Git also reads ~/.gitconfig and merges both,
+; so your identity (user.name/email) can live there without conflicting here.
+
+[core]
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true        ; use n / N to move between diff sections
+	line-numbers = true
+	side-by-side = false   ; flip to true for two-column diffs
+
+[merge]
+	conflictstyle = zdiff3
+
+[diff]
+	colorMoved = default

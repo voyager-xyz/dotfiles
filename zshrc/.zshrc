@@ -6,7 +6,9 @@ export PATH="$HOME/Code/dotfiles/scripts:$PATH"
 
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
-plugins=(git rails vscode)
+# fzf-tab must come before plugins that wrap widgets (autosuggestions); and
+# zsh-syntax-highlighting must be LAST in this list (it wraps the line editor).
+plugins=(git rails vscode fzf-tab zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 source /Users/jarrod.folino/Code/ruby_ast_analyser/completions/make-tasks.zsh
@@ -16,6 +18,12 @@ compinit
 
 alias gg="lazygit"
 alias m="make"
+
+# eza (modern ls)
+alias ls="eza --icons --group-directories-first"
+alias ll="eza -la --icons --group-directories-first --git"
+alias la="eza -a --icons --group-directories-first"
+alias lt="eza --tree --level=2 --icons --group-directories-first"
 
 # claude
 export CLAUDE_CODE_ENABLE_TELEMETRY=1
@@ -57,6 +65,11 @@ alias j="jupyter"
 alias h="hotel"
 #############
 source ~/.zshrc_func
+# fzf: use fd (fast, respects .gitignore, includes hidden files) as the default
+# source for bare `fzf` and Ctrl-T.
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
 export CARAPACE_BRIDGES='zsh,bash,inshellisense'
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 source <(carapace _carapace)

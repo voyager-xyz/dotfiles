@@ -11,6 +11,7 @@ SCRIPTS_DIR="${BASE_DIR}/dotfiles/_scripts"
   echo ",g -> Open github project in browser"
   echo ",m -> Claude memory"
   echo ",b -> Open buildkite"
+  echo ",p -> Open GitHub PR for current branch"
   echo "tt -> change project"
   echo "up -> go to root dir of git project"
 }
@@ -45,6 +46,12 @@ up() {
   else
     echo "Not a git repository (or any of the parent directories): .git"
   fi
+}
+
+,p() {
+    # Open the GitHub PR for the current branch; if none exists yet, open the
+    # PR-create page instead.
+    gh pr view --web 2>/dev/null || gh pr create --web
 }
 
 ,b() {

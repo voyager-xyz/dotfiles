@@ -1,5 +1,6 @@
 **/.claude/settings.local.json
 tmux_command.sh
+pr_description.md
 jarrod_scripts/
 todo.txt
 .other_projects/*
