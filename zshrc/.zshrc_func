@@ -12,6 +12,7 @@ SCRIPTS_DIR="${BASE_DIR}/dotfiles/_scripts"
   echo ",m -> Claude memory"
   echo ",b -> Open buildkite"
   echo ",p -> Open GitHub PR for current branch"
+  echo ",sad -> Interactive find & replace with preview (sad)"
   echo "tt -> change project"
   echo "up -> go to root dir of git project"
 }
@@ -52,6 +53,33 @@ up() {
     # Open the GitHub PR for the current branch; if none exists yet, open the
     # PR-create page instead.
     gh pr view --web 2>/dev/null || gh pr create --web
+}
+
+,sad() {
+    # Interactive find & replace with a per-line diff preview.
+    # Usage: ,sad <find> <replace> [filetype]
+    #   ,sad oldName newName          # search all files
+    #   ,sad oldName newName lua      # only *.lua files
+    # In the fzf preview:
+    #   Tab        add/omit the entry under the cursor (toggle)
+    #   Shift-Tab  same, moving up
+    #   Ctrl-A     select all
+    #   Ctrl-X     clear selection
+    #   Enter      apply only the selected entries (or the one under the
+    #              cursor if nothing is selected)
+    #   Esc        abort, write nothing
+    if [[ -z "$1" ]]; then
+        echo "Usage: ,sad <find> <replace> [filetype]"
+        return 1
+    fi
+    # Search every file (including hidden dotfiles), but never descend into .git.
+    local -a files=(fd -t f --hidden --exclude .git)
+    # Optional 3rd arg narrows to a single extension, e.g. `,sad foo bar lua`.
+    if [[ -n "$3" ]]; then
+        files+=(-e "$3")
+    fi
+    local fzf_opts='--multi --bind=tab:toggle+down,shift-tab:toggle+up,ctrl-a:select-all,ctrl-x:deselect-all --header-first --header="Tab add/omit | ^A all | ^X clear | Enter apply | Esc cancel"'
+    "${files[@]}" | sad -u 0 --fzf="$fzf_opts" --pager 'delta' "$1" "$2"
 }
 
 ,b() {
