@@ -11,5 +11,5 @@ export PATH="$HOME/.local/bin:$PATH"
 alias gw="./gradlew"
 alias qr="./bin/quiet_rspec"
 alias d="devbox"
-source /Users/jarrod.folino/.config/hotel/config.zsh
+[ -f /Users/jarrod.folino/.config/hotel/config.zsh ] && source /Users/jarrod.folino/.config/hotel/config.zsh
 

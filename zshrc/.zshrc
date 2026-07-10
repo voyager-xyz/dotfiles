@@ -11,13 +11,28 @@ ZSH_THEME="robbyrussell"
 plugins=(git rails vscode fzf-tab zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
-source /Users/jarrod.folino/Code/ruby_ast_analyser/completions/make-tasks.zsh
+[ -f /Users/jarrod.folino/Code/ruby_ast_analyser/completions/make-tasks.zsh ] && source /Users/jarrod.folino/Code/ruby_ast_analyser/completions/make-tasks.zsh
 
 autoload -Uz compinit
 compinit
 
 alias gg="lazygit"
-alias mm="ssh jarrodfolino@mini.local"
+# ssh to the mini. Marks the session with a red dot + label so it stands out.
+# Inside tmux an OSC title escape gets swallowed (set-titles is off) and
+# automatic-rename would relabel the window "ssh", so instead rename the tmux
+# window directly and pin it, restoring automatic naming on exit. Outside tmux,
+# set the Ghostty tab title via OSC; shell integration restores it on exit.
+mm() {
+  if [[ -n $TMUX ]]; then
+    tmux rename-window '🔴 mini'
+    tmux setw automatic-rename off
+    ssh jarrodfolino@mini.local
+    tmux setw automatic-rename on
+  else
+    printf '\e]0;🔴 mini\a'
+    ssh jarrodfolino@mini.local
+  fi
+}
 alias m="make"
 
 # eza (modern ls)
@@ -95,7 +110,7 @@ report_tmux_status() {
 
 
 # The next line was added by hotel, leave it at the bottom of this file
-source /Users/jarrod.folino/.config/hotel/config.zsh
+[ -f /Users/jarrod.folino/.config/hotel/config.zsh ] && source /Users/jarrod.folino/.config/hotel/config.zsh
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
