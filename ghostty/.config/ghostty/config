@@ -26,4 +26,3 @@ adjust-cell-height = 20%
 # Enable Option key as Alt for proper modifier key support
 macos-option-as-alt = true
 
-custom-shader = /Users/jarrod.folino/.config/ghostty/shaders/cursor_tail.glsl

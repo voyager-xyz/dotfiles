@@ -5,3 +5,5 @@ jarrod_scripts/
 todo.txt
 .other_projects/*
 .helper_scripts/*
+
+**/.claude/.cc-writes/

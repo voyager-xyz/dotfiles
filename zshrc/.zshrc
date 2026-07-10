@@ -17,6 +17,7 @@ autoload -Uz compinit
 compinit
 
 alias gg="lazygit"
+alias mm="ssh jarrodfolino@mini.local"
 alias m="make"
 
 # eza (modern ls)

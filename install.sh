@@ -9,6 +9,7 @@ stow -d $BASE_DIR -R -t ~ tmuxinator
 stow -d $BASE_DIR -R -t ~ tmux
 stow -d $BASE_DIR -R -t ~ nvim-theme
 stow -d $BASE_DIR -R -t ~ git --adopt
+stow -d $BASE_DIR -R -t ~ launchd
 
 . ~/.zshrc
 . ~/.zshrc_func
