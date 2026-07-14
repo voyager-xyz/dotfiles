@@ -34,9 +34,17 @@ dbname="$(jq -r '.dbname' <<<"$secret_json")"
 
 psql_cmd="psql --host=$host --port=$port --username=$user --dbname=$dbname"
 
+# Re-fetches the secret and pipes only the password to the clipboard, so the
+# password itself never lands in your shell history.
+copy_cmd="aws secretsmanager get-secret-value --secret-id \"$SECRET_ID\" --query SecretString --output text | jq -r '.password' | pbcopy"
+
 echo "PGPASSWORD is set in this shell. Run:"
 echo
 echo "  $psql_cmd"
 echo
-echo "Copy the password from:"
+echo "Copy the password to your clipboard with:"
+echo
+echo "  $copy_cmd"
+echo
+echo "Or view it in the console:"
 echo "https://us-west-2.console.aws.amazon.com/secretsmanager/secret?name=%2Froles-service%2Fdevelopment-us%2Frds%2FMasterCredentials&region=us-west-2"
