@@ -15,12 +15,26 @@ clipboard-read = "allow"
 clipboard-paste-protection = false
 
 ## Theme
-theme = Molokai
+# Chosen for long-session eye comfort on this display. Measured against the
+# previous Molokai: background lifted off near-black (L* 16.2 vs 5.5) and
+# accent chroma roughly halved (mean 38 / max 49, vs 65 / 124). High-chroma
+# accents on a near-black background are what cause halation and colour
+# fringing, and the scaled-HiDPI downsample on this panel amplifies it.
+# All 12 ANSI accents clear 4.5:1 here; Molokai had 2 that did not.
+# Matches the tmux and nvim themes (both catppuccin-macchiato).
+theme = Catppuccin Macchiato
 font-family = FiraMono Nerd Font Mono
 font-size = 18
 
 adjust-cell-width = 3%
 adjust-cell-height = 20%
+
+# Blend text in linear space so coloured glyphs don't pick up a dark fringe,
+# with the correction step that keeps weight identical to `native` (plain
+# `linear` would thin the text). Matters here because macOS renders a
+# 6016x3384 framebuffer and downsamples it to the panel's native 4K, which
+# resamples every glyph edge.
+alpha-blending = linear-corrected
 
 ## Terminal Capabilities
 # Enable Option key as Alt for proper modifier key support
