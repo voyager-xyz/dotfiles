@@ -1,15 +1,15 @@
 alias dsu="devbox services up"
-
-[ -f "${HOME}/.config/hotel/config.zsh" ] && source "${HOME}/.config/hotel/config.zsh"
-
-# granted 
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-fpath=("${HOME}.granted/zsh_autocomplete/assume/" $fpath)
-fpath=("${HOME}/.granted/zsh_autocomplete/granted/" $fpath)
-alias assume=". assume"
-export PATH="$HOME/.local/bin:$PATH"
 alias gw="./gradlew"
 alias qr="./bin/quiet_rspec"
 alias d="devbox"
-[ -f /Users/jarrod.folino/.config/hotel/config.zsh ] && source /Users/jarrod.folino/.config/hotel/config.zsh
 
+export PATH="$HOME/.local/bin:$PATH"
+
+# hotel. Sourced once here -- this file used to source it twice, and .zshrc
+# sourced it a third time.
+[ -f "${HOME}/.config/hotel/config.zsh" ] && source "${HOME}/.config/hotel/config.zsh"
+
+# granted / .cargo/env intentionally omitted: both already load from .zshenv,
+# which runs first. The copy that used to live here also had a typo --
+# "${HOME}.granted/..." (missing slash) -- so it pushed a nonexistent
+# directory onto fpath for compinit to stat on every startup.

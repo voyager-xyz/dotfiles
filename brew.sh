@@ -2,7 +2,7 @@
 xcode-select --install
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 brew install --cask font-jetbrains-mono-nerd-font font-caskaydia-cove-nerd-font font-iosevka-term-nerd-font font-fira-mono-nerd-font
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+# node versions: fnm, not nvm. nvm.sh cost 819ms per interactive shell.
 
 brew install --cask $(brew search font-.*-nerd-font | awk '{ print $1 }')\n
 brew install --cask cardinal-search
@@ -10,7 +10,9 @@ brew tap debugtheworldbot/keystats
 brew install keystats
 git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
 [ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-apps=(bash tmuxinator stow pyenv go zoxide rbenv fzf carapace xz neovim gh openssl@3 starship bat lazygit yazi stow tmux carapace pyenv fontconfig libpng rbenv fzf neovim ripgrep zoxide)
+# De-duplicated (stow/carapace/pyenv/rbenv/fzf/neovim/zoxide were each listed
+# twice), plus fnm, and eza/fd which .zshrc aliases already depend on.
+apps=(bash tmuxinator stow pyenv go zoxide rbenv fzf carapace xz neovim gh openssl@3 starship bat lazygit yazi tmux fnm fontconfig libpng ripgrep eza fd)
 for app in "${apps[@]}"; do
     echo "Installing $app."
     brew install "$app"

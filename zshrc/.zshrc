@@ -1,41 +1,43 @@
 export LC_CTYPE=en_US.UTF-8
-export TERM=xterm-256color
 export LC_ALL=en_US.UTF-8
 
 export PATH="$HOME/Code/dotfiles/scripts:$PATH"
 
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
+
+# Skip omz's periodic background `git fetch` of itself.
+DISABLE_AUTO_UPDATE=true
+# Skip compaudit's insecure-directory scan on every compinit (~15ms, and it
+# re-stats every fpath entry).
+DISABLE_COMPFIX=true
+# Don't install url-quote-magic / bracketed-paste-magic. They wrap the paste
+# widget and run zsh code per pasted character, which is what makes pasting a
+# long command into omz feel sluggish.
+DISABLE_MAGIC_FUNCTIONS=true
+
+# Trimmed from (git rails vscode fzf-tab zsh-autosuggestions
+# zsh-syntax-highlighting). Measured against 10k lines of ~/.zsh_history:
+#   rails   -- 60 aliases, 0 used
+#   vscode  -- 14 aliases, 0 used
+#   git     -- ~150 aliases, 3 used (gst 38x, gco 4x, gprom 1x), re-aliased
+#              by hand below. It was also the source of ~500 of the ~835
+#              compdef calls at startup.
 # fzf-tab must come before plugins that wrap widgets (autosuggestions); and
 # zsh-syntax-highlighting must be LAST in this list (it wraps the line editor).
-plugins=(git rails vscode fzf-tab zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(fzf-tab zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
+
+# The only three survivors of the omz git plugin.
+alias gst="git status"
+alias gco="git checkout"
+alias gprom="git pull --rebase origin main"
 [ -f /Users/jarrod.folino/Code/ruby_ast_analyser/completions/make-tasks.zsh ] && source /Users/jarrod.folino/Code/ruby_ast_analyser/completions/make-tasks.zsh
 
-autoload -Uz compinit
-compinit
 alias lazygit='env -u DEVELOPER_DIR lazygit'
 alias ,lg="lazygit"
-# ssh to the mini. Marks the session with a red dot + label so it stands out.
-# Inside tmux an OSC title escape gets swallowed (set-titles is off) and
-# automatic-rename would relabel the window "ssh", so instead rename the tmux
-# window directly and pin it, restoring automatic naming on exit. Outside tmux,
-# set the Ghostty tab title via OSC; shell integration restores it on exit.
-mm() {
-  if [[ -n $TMUX ]]; then
-    tmux rename-window '🔴 mini'
-    tmux setw automatic-rename off
-    ssh jarrodfolino@mini.local
-    tmux setw automatic-rename on
-  else
-    printf '\e]0;🔴 mini\a'
-    ssh jarrodfolino@mini.local
-  fi
-}
-alias m="make"
 
-# eza (modern ls)
 alias ls="eza --icons --group-directories-first"
 alias ll="eza -la --icons --group-directories-first --git"
 alias la="eza -a --icons --group-directories-first"
@@ -50,29 +52,16 @@ export OTEL_TRACES_EXPORTER=otlp
 export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:5080/api/default
 export OTEL_EXPORTER_OTLP_HEADERS=Authorization=Basic cm9vdEBleGFtcGxlLmNvbTpDb21wbGV4cGFzcyMxMjM=
-alias ,c="claude --dangerously-skip-permissions"
+alias ,c="claude"
 
-# tmux theme switcher (fzf). Type ,u at any prompt — works in or out of tmux.
 alias ,u="$HOME/.config/tmux-theme/switch.sh"
-
-# nvim colorscheme switcher (fzf). Type ,un at any prompt — applies to running
-# nvim instances and persists for new ones (nvim-astro reads the choice).
 alias ,un="$HOME/.config/nvim-theme/switch.sh"
-
-# ghostty shader switcher (fzf). Type ,s at any prompt — live-previews each
-# shader as you scroll and reloads Ghostty's config on selection.
 alias ,s="$HOME/.config/ghostty/shader-switch.sh"
-
-# ruby
 alias be="bundle exec"
 alias bi="bundle install"
 alias r="./bin/rails"
-
-# python
 alias pr="poetry run"
 alias pt="poetry run pytest"
-
-# other
 alias ee="exit"
 alias chns='open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security'
 alias n="NVIM_APPNAME=nvim-astro nvim"
@@ -81,8 +70,6 @@ alias nchad="NVIM_APPNAME=nvim-chad nvim"
 alias nlazy="NVIM_APPNAME=nvim-lazy nvim"
 
 alias tko="tmux kill-server"
-alias j="jupyter"
-alias h="hotel"
 #############
 source ~/.zshrc_func
 # fzf: use fd (fast, respects .gitignore, includes hidden files) as the default
@@ -92,8 +79,15 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export CARAPACE_BRIDGES='zsh,bash,inshellisense'
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-source <(carapace _carapace)
-export NVM_DIR="$HOME/.nvm"
+# Cache carapace's ~20KB init instead of regenerating it on every startup.
+# Rebuilt whenever the carapace binary is newer than the cache.
+_carapace_cache="${XDG_CACHE_HOME:-$HOME/.cache}/carapace-init.zsh"
+if [[ ! -s $_carapace_cache || $commands[carapace] -nt $_carapace_cache ]]; then
+  mkdir -p ${_carapace_cache:h}
+  carapace _carapace zsh >| $_carapace_cache
+fi
+source $_carapace_cache
+unset _carapace_cache
 
 report_tmux_status() {
   local exit_code=$?
@@ -109,9 +103,15 @@ report_tmux_status() {
 [ -f "${HOME}/.cultureamp" ] && source "${HOME}/.cultureamp"
 
 
-# The next line was added by hotel, leave it at the bottom of this file
-[ -f /Users/jarrod.folino/.config/hotel/config.zsh ] && source /Users/jarrod.folino/.config/hotel/config.zsh
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# node version manager. Replaced nvm, whose nvm.sh cost 819ms per interactive
+# shell -- 56% of total startup -- because nvm_auto re-validated the install on
+# every launch. fnm does the same job in ~10ms.
+#
+# Deliberately no --use-on-cd: every ~/Code repo carrying a .nvmrc also has
+# devbox.json + .envrc, and devbox/direnv puts its own node on PATH, winning
+# over whatever the version manager selected. So the hook only cost a chpwd
+# subprocess and printed "Requested version vX is not currently installed" on
+# each cd. Run `fnm use` by hand for the rare non-devbox project.
+if (( $+commands[fnm] )); then
+  eval "$(fnm env --shell zsh)"
+fi

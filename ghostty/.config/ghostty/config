@@ -10,6 +10,13 @@ window-padding-x = 30
 window-padding-y = 50
 macos-window-shadow = false
 
+# Keep redraws aligned to the refresh interval. Setting this false is the only
+# real input-latency lever on macOS, but Ghostty documents it as risking kernel
+# panics on 14.4+ and misbehaving on external/DisplayLink displays -- and this
+# panel is a scaled-HiDPI 4K (see the alpha-blending note below), so the risk
+# is live here. Left on deliberately; flip it only to test latency.
+window-vsync = true
+
 ## Clipboard
 clipboard-read = "allow"
 clipboard-paste-protection = false
@@ -40,3 +47,21 @@ alpha-blending = linear-corrected
 # Enable Option key as Alt for proper modifier key support
 macos-option-as-alt = true
 
+## Performance
+# Scrollback lives in tmux, which owns its own history, so Ghostty's default
+# 10MB per surface is memory held for a buffer that is never scrolled. 1MB is
+# enough for the occasional bare (non-tmux) surface.
+scrollback-limit = 1000000
+
+# No inline-image protocol use in this setup (no image.nvim, timg, chafa), so
+# the 320MB-per-surface default is pure reservation. Raise this again if an
+# image plugin lands.
+image-storage-limit = 16000000
+
+# Don't render the dimensions overlay on every resize.
+resize-overlay = never
+
+# Skip window-state restore work at launch. Cost: no window restore after a
+# force-quit.
+window-save-state = never
+custom-shader = /Users/jarrod.folino/.config/ghostty/shaders/ripple_rectangle_cursor.glsl
