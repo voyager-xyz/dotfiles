@@ -15,8 +15,8 @@ source $ZSH/oh-my-zsh.sh
 
 autoload -Uz compinit
 compinit
-
-alias gg="lazygit"
+alias lazygit='env -u DEVELOPER_DIR lazygit'
+alias ,lg="lazygit"
 # ssh to the mini. Marks the session with a red dot + label so it stands out.
 # Inside tmux an OSC title escape gets swallowed (set-titles is off) and
 # automatic-rename would relabel the window "ssh", so instead rename the tmux
